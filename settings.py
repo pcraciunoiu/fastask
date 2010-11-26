@@ -1,9 +1,13 @@
 # Django settings for fastask project.
 import logging
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 LOG_LEVEL = logging.DEBUG
+
+ROOT = os.path.dirname(os.path.abspath(__file__))
+path = lambda *a: os.path.join(ROOT, *a)
 
 ADMINS = ()
 
@@ -11,14 +15,26 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.',  # 'postgresql_psycopg2', 'postgresql'
+                                          # 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '',                       # Or path to db file if using sqlite3
+        'USER': '',                       # Not used with sqlite3.
+        'PASSWORD': '',                   # Not used with sqlite3.
+        # Not used with sqlite3.
+        'HOST': '',                       # Set to empty string for localhost.
+        'PORT': '',                       # Set to empty string for default.
     }
 }
+
+DEFAULT_FROM_EMAIL = 'team@fastask.net'
+SERVER_EMAIL = 'server-error@fastask.net'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+
+# Cache Settings
+CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
+CACHE_PREFIX = 'fastask:'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -27,17 +43,18 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'US/Pacific'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-US'
 
 SITE_ID = 1
+SITE_TITLE = 'fastask'
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = True
+USE_I18N = False
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
@@ -45,36 +62,15 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = path('media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/static/media/'
 
-# Absolute path to the directory that holds static files.
-# Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
-
-# URL that handles the static files served from STATIC_ROOT.
-# Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
-
-# URL prefix for admin media -- CSS, JavaScript and images.
-# Make sure to use a trailing slash.
-# Examples: "http://foo.com/static/admin/", "/static/admin/".
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
-# A list of locations of additional static files
-STATICFILES_DIRS = ()
-
-# List of finder classes that know how to find static files in
-# various locations.
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'og8&kmt9d_v=65nv(jr(qzp1m1osqfc#jx823tyo==(s)1@mmi'
@@ -86,20 +82,35 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.media',
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+
+    'common.context_processors.global_settings',
+    'jingo_minify.helpers.build_ids',
+    'csrf_context.csrf',
+)
+
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'commonware.middleware.NoVarySessionMiddleware',
+    'commonware.middleware.FrameOptionsHeader',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'common.anonymous.AnonymousIdentityMiddleware',
 )
 
 ROOT_URLCONF = 'fastask.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    path('templates'),
 )
 
 INSTALLED_APPS = (
@@ -108,31 +119,118 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'django.contrib.admin',
+    'common',
+    'dashboards',
+    'cronjobs',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
+# Extra apps for testing
+if DEBUG:
+    INSTALLED_APPS += (
+        'django_extensions',
+        'django_nose',
+        'test_utils',
+    )
+
+TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
+TEST_UTILS_NO_TRUNCATE = ('django_content_type',)
+
+
+def JINJA_CONFIG():
+    import jinja2
+    from django.conf import settings
+    from caching.base import cache
+    config = {'extensions': ['caching.ext.cache', 'jinja2.ext.with_',
+              'jinja2.ext.i18n'],
+              'finalize': lambda x: x if x is not None else ''}
+    if 'memcached' in cache.scheme and not settings.DEBUG:
+        # We're passing the _cache object directly to jinja because
+        # Django can't store binary directly; it enforces unicode on it.
+        # Details: http://jinja.pocoo.org/2/documentation/api#bytecode-cache
+        # and in the errors you get when you try it the other way.
+        bc = jinja2.MemcachedBytecodeCache(cache._cache,
+                                           "%sj2:" % settings.CACHE_PREFIX)
+        config['cache_size'] = -1  # Never clear the cache
+        config['bytecode_cache'] = bc
+    return config
+
+# Bundles for JS/CSS Minification
+MINIFY_BUNDLES = {
+    'css': {
+        'common': (
+            'css/main.css',
+            'css/modal.css',
+            'css/workbox.css',
+            'css/list.css',
+            'css/profile.css',
+            'css/notification.css',
+            'css/autocomplete.css',
+        ),
+        'reglogin': (
+            'css/errors.css',
+            'css/info.css',
+            'css/invite.css',
+            'css/login.css',
+            'css/register.css',
+        ),
     },
-    'loggers': {
-        'django.request':{
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    }
+    'js': {
+        'common': (
+            'js/libs/jquery.min.js',
+            'js/libs/jqModal.js',
+            'js/libs/jquery.history.js',
+            'js/libs/jquery.autocomplete.pack.js',
+            'js/constants.js',
+            'js/url.js',
+            'js/notification.js',
+            'js/row.js',
+            'js/list.js',
+            'js/workbox.js',
+            'js/modal.js',
+            'js/profile.js',
+            'js/main.js',
+        ),
+        'reglogin': (
+            'js/libs/jquery.min.js',
+            'js/register.js',
+        ),
+    },
 }
+
+JAVA_BIN = '/usr/bin/java'
+
+#
+# Session cookies
+SESSION_COOKIE_SECURE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+#
+# Connection information for Sphinx search
+SPHINX_HOST = '127.0.0.1'
+SPHINX_PORT = 3381
+SPHINXQL_PORT = 3382
+
+SPHINX_INDEXER = '/usr/bin/indexer'
+SPHINX_SEARCHD = '/usr/bin/searchd'
+SPHINX_CONFIG_PATH = path('configs/sphinx/sphinx.conf')
+
+TEST_SPHINX_PATH = path('tmp/test/sphinx')
+TEST_SPHINX_PORT = 3416
+TEST_SPHINXQL_PORT = 3418
+
+# Sphinx results tweaking
+SEARCH_MAX_RESULTS = 1000
+
+# Auth and permissions related constants
+LOGIN_URL = '/users/login'
+LOGOUT_URL = '/users/logout'
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+REGISTER_URL = '/users/register'
+
+# Anonymous user cookie
+ANONYMOUS_COOKIE_NAME = 'fastask_anonid'
+ANONYMOUS_COOKIE_MAX_AGE = 30 * 86400  # Seconds

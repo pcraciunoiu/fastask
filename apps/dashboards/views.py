@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+import jingo
+
 
 def main(request):
-    return HttpResponse('Main page')
+    return jingo.render(request, 'dashboards/main.html', {'a': 'bcd'})

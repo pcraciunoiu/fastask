@@ -1,0 +1,108 @@
+/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+body {
+    font-family: Verdana, Helvetica, Arial, Tahoma, sans-serif;
+    font-size: 12px;
+    padding: 0; margin: 0;
+    line-height: 2em;
+    background: #d6d6d6 url('img/bg-gradient.jpg') repeat-x;
+}
+.frt {
+    float: right;
+}
+.flt {
+    float: left;
+}
+.sh {
+    display: none;
+}
+.cl {
+    clear: both;
+}
+.center {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+.hide {
+    display: none;
+}
+
+a, a:visited {
+    color: #56991a;
+    outline: none;
+}
+a:hover {
+    color: #71b236;
+}
+
+/*****************************************************************************/
+/*
+/* Content
+/*
+/*****************************************************************************/
+#content {
+    width: 100%;
+}
+.nojs {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -300px;
+    margin-top: -38px;
+    padding-top: 25px;
+    text-align: center;
+    width: 600px;
+    height: 50px;
+    -moz-box-shadow: 1px 1px 12px #000;
+    -webkit-box-shadow: 1px 1px 12px #000;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    background: #f5fcf4;
+}
+
+.loading {
+    display: none;
+    width: 100%;
+    background: url('img/wait2.gif') no-repeat center;
+    opacity: 0.5;
+    filter:alpha(opacity=50);
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    position: absolute;
+    top: 0;
+    padding: 1em 0;
+    right: 0;
+    z-index: 10000;
+}
+
+.spin {
+    background: url('img/spin.gif') no-repeat center;
+    display: inline-block;
+    position: absolute;
+    bottom: 14px;
+    left: 190px;
+    border: 0;
+    text-indent: -9999px;
+    cursor: pointer;
+    width: 15px;
+    height: 31px;
+}
+
+input[type="text"], input[type="password"] {
+    border: 1px solid #d2e8c8;
+    padding: 0 2px;
+}
+
+.info {
+    color: #8f8f8f;
+    font-size: 80%;
+}
+
+.text .g {
+    color: #56991a;
+    text-decoration: none;
+}

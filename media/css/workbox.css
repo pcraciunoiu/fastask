@@ -1,0 +1,219 @@
+/*****************************************************************************/
+/*
+/* Work box
+/*
+/*****************************************************************************/
+.work-box {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    margin-left: 340px;
+    height: 310px;
+    min-height: 310px;
+    padding: 12px;
+    width: 246px;
+    -moz-box-shadow: 1px 1px 12px #000;
+    -webkit-box-shadow: 1px 1px 12px #000;
+    -moz-border-radius-bottomleft: 16px;
+    -moz-border-radius-bottomright: 16px;
+    -webkit-border-bottom-left-radius: 16px;
+    -webkit-border-bottom-right-radius: 16px;
+    background: #f5fcf4;
+}
+
+.work-box .title {
+    text-align: center;
+    margin: 12px auto 0 auto;
+    padding-bottom: .3em;
+    font-family: Georgia, freeserif, serif;
+    font-size: 26px;
+    font-weight: normal;
+}
+.work-box label {
+    cursor: pointer;
+    display: inline-block;
+    padding: .3em;
+}
+
+.work-box div.label {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.work-box textarea {
+    width: 234px;
+    border: 1px solid #d2e8c8;
+}
+.work-box .groups_auto {
+    width: 234px;
+    top: 122px;
+}
+.work-box input[type="text"] {
+    width: 108px;
+}
+
+.work-box .due
+, .work-box .share {
+    position: relative;
+}
+.work-box .due {
+    top: -3px;
+}
+.work-box .due-icon {
+    position: absolute;
+    display: block;
+    background: url('/css/img/sprite.png') no-repeat -302px 0;
+    bottom: 8px;
+    left: 102px;
+    width: 14px;
+    height: 14px;
+    padding: 0;
+}
+.work-box .share-icon {
+    position: absolute;
+    display: block;
+    background: url('/css/img/sprite.png') no-repeat -244px 0;
+    width: 10px;
+    height: 13px;
+    bottom: 8px;
+    right: 2px;
+    padding: 0;
+    z-index: 1500;
+}
+
+.work-box .share ul {
+    list-style: none;
+    line-height: 1em;
+    position: absolute;
+    top: 35px;
+    display: none;
+    background: #fff;
+    width: 112px;
+    padding: 0;
+    border: 1px solid #ccc;
+    z-index: 1000;
+}
+.work-box .share li span {
+    display: inline-block;
+    width: 70px;
+}
+.work-box .share li:hover,
+.work-box .share li.active {
+    background: #eee;
+}
+.work-box .share input {
+    cursor: pointer;
+}
+.work-box .share .input {
+    width: 108px;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #d2e8c8;
+    display: inline-block;
+    padding: 0 2px;
+    line-height: 1.45em;
+    height: 18px;
+    overflow: hidden;
+    top: 2px;
+    position: relative;
+}
+.work-box .share:hover ul {
+    display: block;
+}
+.work-box .share input[type="text"] {
+    background: #eee;
+}
+.work-box .share a {
+    display: block;
+    height: 26px;
+    line-height: 26px;
+    font-size: 90%;
+    text-decoration: none;
+    text-align: center;
+}
+.work-box .priority > span:first-child {
+    padding: .3em;
+    cursor: default;
+}
+.work-box .priority span {
+    cursor: pointer;
+}
+.work-box .priority .p {
+    border: 1px solid #f5fcf4;
+    display: inline-block;
+    height: 20px;
+    width: 66px;
+    padding: 0 3px 3px 3px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+.work-box .priority .p.p-1 {
+    width: 46px;
+    margin-right: 20px;
+}
+.work-box .priority > span:first-child {
+    margin-right: 10px;
+}
+.work-box .priority .p-1:hover {
+    background-color: #fcedeb;
+}
+.work-box .priority .p-2:hover {
+    background-color: #fceeca;
+}
+.work-box .priority .p-1.s {
+    background-color: #f5e6e4;
+}
+.work-box .priority .p-2.s {
+    background-color: #faeac2;
+}
+
+.work-box .img {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    position: relative;
+    top: 2px;
+    background: url('/css/img/sprite.png') no-repeat -278px 0;
+}
+.work-box .img.me {
+    background-position: -290px 0;
+}
+.work-box input[name="add"] {
+    display: block;
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    background: url('/css/img/sprite.png') no-repeat -317px 0;
+    border: 0;
+    text-indent: -9999px;
+    cursor: pointer;
+    width: 124px;
+    height: 31px;
+}
+.work-box input[name="add"]:hover {
+    background-position: -317px -31px;
+}
+.work-box input[name="plan"] {
+    display: block;
+    position: absolute;
+    bottom: 14px;
+    left: 138px;
+    background: url('/css/img/sprite.png') no-repeat -441px 0;
+    border: 0;
+    text-indent: -9999px;
+    cursor: pointer;
+    width: 51px;
+    height: 31px;
+}
+.work-box input[name="plan"]:hover {
+    background-position: -441px -31px;
+}
+
+.work-box .clear {
+    position: absolute;
+    display: block;
+    height: 31px;
+    bottom: 14px;
+    left: 204px;
+    text-decoration: none;
+}

@@ -1,0 +1,10 @@
+# Production requirements, not compiled. For compiled see compiled.txt
+
+# -e git://github.com/django/django.git#egg=django -- installed from git
+-e git://github.com/jbalogh/jingo.git#egg=jingo
+-e git://github.com/jsocol/jingo-minify.git#egg=jingo-minify
+-e git://github.com/jbalogh/schematic.git#egg=schematic
+-e git://github.com/jsocol/django-cronjobs.git#egg=django_cronjobs
+-e git://github.com/jsocol/commonware.git#egg=commonware
+-e git://github.com/django-extensions/django-extensions.git#egg=django_extensions
+-e git://github.com/jbalogh/django-cache-machine.git#egg=django-cache-machine

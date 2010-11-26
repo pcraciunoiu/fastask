@@ -1,0 +1,11 @@
+# Development requirements
+# require prod first
+-r prod.txt
+
+ipython==0.10
+nose==0.11.1
+
+-e git://github.com/robhudson/django-debug-toolbar.git#egg=django_debug_toolbar
+-e git://github.com/jbalogh/django-nose.git#egg=django_nose
+-e git://github.com/jbalogh/test-utils.git#egg=test-utils
+-e git://github.com/jbalogh/check.git#egg=check

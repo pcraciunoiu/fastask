@@ -1,0 +1,104 @@
+/*****************************************************************************/
+/*
+/* Modal window styling
+/*
+/*****************************************************************************/
+.jqmWindow {
+    display: none;
+    position: fixed;
+    background: #eee;
+    color: #333;
+    border: 1px solid black;
+    padding: 12px;
+    -moz-box-shadow: 1px 1px 12px #000;
+    -webkit-box-shadow: 1px 1px 12px #000;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+}
+
+.jqmOverlay {
+    background: #000;
+}
+
+.jqmClose {
+    position: absolute;
+    top: 0px;
+    right: 12px;
+    text-decoration: none;
+    font-size: 120%;
+}
+
+.jqmWindow.help {
+    top: 10px;
+    bottom: 10px;
+    left: 50%;
+    margin-left: -350px;
+    width: 700px;
+    border: 1px solid black;
+    padding: 12px;
+}
+.jqmWindow .text .help {
+    padding: 0 20px;
+    margin: 20px 0;
+}
+
+.jqmWindow.plan {
+    top: 50px;
+    left: 50%;
+    margin-left: -350px;
+    width: 250px;
+}
+
+.jqmWindow.collaborator {
+    top: 50%;
+    left: 50%;
+    margin-left: -145px;
+    width: 300px;
+}
+.jqmWindow.collaborator input {
+    width: 260px;
+}
+
+a.help_trigger {
+    position: fixed;
+    left: 50%;
+    margin-left: 548px;
+    top: 10px;
+    width: 50px;
+    color: #949393;
+    text-align: right;
+    text-decoration: none;
+    line-height: 1em;
+    height: 13px;
+}
+.help_trigger span {
+    float: left;
+}
+a.help_trigger .text {
+    display: none;
+}
+a.help_trigger:hover .text {
+    position: absolute;
+    left: 0; top: 0;
+    display: block;
+    width: 25px;
+    height: 13px;
+}
+.help_trigger .icon {
+    position: absolute;
+    right: 0; top: 0;
+    width: 13px;
+    height: 13px;
+    background: url('/css/img/sprite.png') no-repeat -212px -31px;
+    display: block;
+}
+
+.help .text {
+    overflow: auto;
+    height: 100%;
+}
+
+.help .jqmClose {
+    top: 4px;
+    right: 40px;
+}

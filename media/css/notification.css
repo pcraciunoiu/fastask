@@ -1,0 +1,75 @@
+/*****************************************************************************/
+/*
+/* Notifications
+/*
+/*****************************************************************************/
+.notification {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    margin-left: -628px;
+    min-height: 40px;
+    height: auto;
+    width: 300px;
+    z-index: 1000;
+}
+
+.notification .top {
+    background: url('/css/img/sprite.png') no-repeat -570px 0;
+    padding: 12px 20px 0;
+    height: 28px;
+    z-index: 1010;
+    position: relative;
+    cursor: pointer;
+}
+
+.notification .adding {
+    display: none;
+    padding-right: 100px;
+    background: url('img/loadbar.gif') no-repeat right;
+}
+
+.notification ul {
+    position: relative;
+    top: -10px;
+    background: #fff;
+    padding: 15px 0 0;
+    margin: 0 12px 0 8px;
+    list-style: none;
+    line-height: 2em;
+    z-index: 1001;
+    display: none;
+}
+
+.notification li {
+    padding: 0 13px;
+}
+
+.notification li:nth-child(2n) {
+    background: #f5fcf4;
+}
+.notification .icon {
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    margin: 0 15px 0 5px;
+    background: url('/css/img/sprite.png') no-repeat -504px 0;
+}
+
+.notification .icon.d {
+    background-position: -254px 0;
+    width: 12px;
+}
+.notification .icon.u {
+    background-position: -530px 0;
+}
+.notification .icon.p {
+    background-position: -543px 0;
+}
+.notification .icon.s {
+    background-position: -556px 0;
+}
+.notification .icon.e {
+    background-position: -492px 0;
+    width: 12px;
+}

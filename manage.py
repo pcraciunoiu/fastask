@@ -9,6 +9,7 @@ path = lambda *a: os.path.join(ROOT, *a)
 
 prev_sys_path = list(sys.path)
 
+site.addsitedir(path('lib'))
 site.addsitedir(path('apps'))
 
 # Move the new items to the front of sys.path.
@@ -26,7 +27,7 @@ try:
     import settings_local as settings
 except ImportError:
     try:
-        import settings # Assumed to be in the same directory.
+        import settings  # Assumed to be in the same directory.
     except ImportError:
         import sys
         sys.stderr.write(

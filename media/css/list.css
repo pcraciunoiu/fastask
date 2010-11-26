@@ -1,0 +1,662 @@
+/*****************************************************************************/
+/*
+/* Task box
+/*
+/*****************************************************************************/
+.task-box {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    margin-left: -320px;
+    height: 100%;
+    min-height: 300px;
+    width: 640px;
+    -moz-box-shadow: 1px 1px 12px #000;
+    -webkit-box-shadow: 1px 1px 12px #000;
+    -moz-border-radius-topleft: 16px;
+    -moz-border-radius-topright: 16px;
+    -webkit-border-top-left-radius: 16px;
+    -webkit-border-top-right-radius: 16px;
+    background: #fff;
+}
+
+.task-box .notasks {
+    clear: left;
+    text-align: center;
+    padding: 2em 0;
+}
+
+.task-box .tabs .icon {
+    background: url('/css/img/menu-bg.png') repeat-x;
+    float: left;
+    padding: 15px;
+    cursor: pointer;
+    position: relative;
+}
+
+.task-box .icon .c {
+    font-size: 8px;
+    color: #a2a2a2;
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    text-align: center;
+    width: 100%;
+}
+.task-box .tabs .icon:hover
+, .task-box .tabs .icon.active {
+    background: #fbfbfb;
+}
+.task-box .tabs .icon a {
+    text-align: center;
+    width: 22px;
+    height: 20px;
+    cursor: pointer;
+    display: block;
+    background: url('/css/img/sprite.png') no-repeat 0 0;
+}
+.task-box .tabs .icon.my-tasks {
+    padding-left: 35px;
+    -moz-border-radius-topleft: 16px;
+    -webkit-border-top-left-radius: 16px;
+}
+.task-box .icon.my-tasks .c {
+    width: 90px;
+}
+.task-box .tabs .icon.archive {
+    -moz-border-radius-bottomright: 16px;
+    -webkit-border-bottom-right-radius: 16px;
+}
+.task-box .tabs .icon.assignments a {
+    background-position: -22px 0;
+    width: 17px;
+}
+.task-box .tabs .icon.command {
+    padding-top: 13px;
+}
+.task-box .tabs .icon.command a {
+    background-position: -39px 0;
+    width: 28px;
+    height: 22px;
+}
+.task-box .tabs .icon.archive a {
+    background-position: -67px 0;
+    width: 23px;
+}
+.task-box .tabs .icon.my-tasks:hover a
+, .task-box .tabs .icon.my-tasks.active a {
+    background-position: 0 -31px;
+}
+.task-box .tabs .icon.assignments:hover a
+, .task-box .tabs .icon.assignments.active a {
+    background-position: -22px -31px;
+}
+.task-box .tabs .icon.command:hover a
+, .task-box .tabs .icon.command.active a {
+    background-position: -39px -31px;
+}
+.task-box .tabs .icon.archive:hover a
+, .task-box .tabs .icon.archive.active a {
+    background-position: -67px -31px;
+}
+.task-box .title {
+    text-align: center;
+    padding: 15px 0 5px 0;
+    margin: 0;
+    width: 222px;
+    height: 36px;
+    font-family: Georgia, freeserif, serif;
+    font-size: 26px;
+    font-weight: normal;
+}
+
+.task-box .groups:hover .title {
+    -moz-border-radius-topleft: 16px;
+    -moz-border-radius-topright: 16px;
+    -webkit-border-top-left-radius: 16px;
+    -webkit-border-top-right-radius: 16px;
+    background: #fbfbfb;
+    -moz-box-shadow: 0px 0px 2px #000;
+    -webkit-box-shadow: 0px 0px 2px #000;
+    position: relative; z-index: 1;
+}
+
+.task-box .groups .title a {
+    color: #000;
+    text-decoration: none;
+}
+.task-box .groups {
+    float: left;
+    position: relative;
+    width: 222px;
+}
+.task-box .groups:hover ul {
+    display: block;
+}
+
+.task-box .groups a:hover {
+    text-decoration: underline;
+}
+
+.task-box .groups ul {
+   -moz-box-shadow: 0px 2px 2px #000;
+    -webkit-box-shadow: 0px 2px 2px #000;
+    display: none;
+    list-style: none;
+    width: 192px;
+    list-style: none;
+    line-height: 30px;
+    margin: 0 0 0 -111px;
+    padding: 0 15px 10px;
+    top: 40px; left: 50%;
+    position: absolute;
+    background: #fbfbfb;
+    z-index: 10;
+    -moz-border-radius-bottomleft: 16px;
+    -moz-border-radius-bottomright: 16px;
+    -webkit-border-bottom-left-radius: 16px;
+    -webkit-border-bottom-right-radius: 16px;
+    text-align: center;
+}
+.task-box .groups ul a {
+    line-height: 1.8em;
+    display: block;
+    list-style: none;
+    padding: 0 1em;
+    margin: .5em 0;
+    text-decoration: none;
+}
+
+.task-box .search {
+    float: left;
+    width: 112px;
+    background: url('/css/img/menu-bg.png') repeat-x;
+    height: 37px;
+    padding: 15px 38px 0;
+    -moz-border-radius-bottomleft: 16px;
+    -moz-border-radius-topright: 16px;
+    -webkit-border-bottom-left-radius: 16px;
+    -webkit-border-top-right-radius: 16px;
+    line-height: 1em;
+    position: relative;
+}
+
+.task-box .search input {
+    width: 112px;
+}
+
+.task-box .search .icon a {
+    display: block;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    background: url('/css/img/sprite.png') no-repeat -90px 0;
+    left: 140px;
+    top: 17px;
+}
+.task-box .search .icon:hover a {
+    background-position: -90px -31px;
+}
+
+/*****************************************************************************/
+/*
+/* Task table
+/*
+/*****************************************************************************/
+.task-table {
+    width: 100%;
+    margin: 0 auto;
+}
+.task-table .row {
+    clear: both;
+    height: 30px;
+}
+.task-table .row .td {
+    float: left;
+    padding: .3em .5em;
+    height: 1.4em;
+    margin: 0;
+}
+.task-table a {
+    text-decoration: none;
+    color: #c12;
+}
+.task-table input[type="text"] {
+    width: 100%;
+    border: 1px solid #d2e8c8;
+}
+.task-table .row:hover .sh {
+    display: block;
+}
+.task-table .td span {
+    display: block;
+    height: 2em;
+    overflow: hidden;
+}
+.editable .success {
+    float: right;
+    text-decoration: none !important;
+    z-index: 1;
+    top: -3em;
+}
+.task-table .td.followers span {
+    display: inline;
+}
+.task-table .td.s {
+    width: 13px;
+    padding: 0;
+    margin: 5px 9px 0 12px;
+    position: absolute;
+    left: 0;
+}
+.task-table .md {
+    padding: 0;
+    margin: .35em .1em;
+}
+.task-table .p {
+    position: absolute;
+    left: 34px;
+    width: 12px;
+    height: 2em;
+}
+.task-table .p a {
+    display: block;
+    margin-top: 6px;
+    height: 12px;
+    width: 12px;
+    background: url('/css/img/sprite.png') no-repeat -290px -31px;
+}
+.task-table .pri_1 a {
+    background-position: -278px 0;
+}
+.task-table .pri_2 a {
+    background-position: -290px 0;
+}
+.task-table .text {
+    width: 445px;
+}
+.task-table .text span {
+    margin: 0 3px;
+    position: absolute;
+    left: 64px;
+    display: inline;
+    width: 455px;
+    line-height: 2.5em;
+}
+.task-table .text.nogroup .g {
+    left: 62px;
+    top: 3px;
+    position: relative;
+}
+.task-table .text form {
+    position: relative;
+    top: 3px;
+    left: 60px;
+}
+.text.nogroup form.inplace {
+    display: inline;
+}
+.text.nogroup form.inplace input {
+    display: inline;
+}
+.done .text span {
+    text-decoration: line-through;
+}
+.task-table .row.ok {
+    background: #e0facf;
+}
+.task-table .row.err {
+    background: #fbe9e9;
+}
+.row:nth-child(2n) {
+    background: #f5fcf4;
+}
+.task-table .row .text {
+    padding-top: 0;
+}
+.task-table .row:hover .nogroup .g {
+    z-index: 100;
+}
+.task-table .row.ok:hover .text span {
+    background: #e0facf;
+}
+.task-table .row.err:hover .text span {
+    background: #fbe9e9;
+}
+.task-table .row:hover .text span {
+    background: #e9f0e6;
+    height: auto;
+    position: absolute;
+    overflow: visible;
+    z-index: 1;
+    width: 453px !important;
+    margin-left: -64px;
+    padding-left: 67px;
+    padding-right: 120px;
+    -moz-box-shadow: 0px 2px 2px #d7ddd5;
+    -webkit-box-shadow: 0px 2px 2px #d7ddd5;
+}
+.task-table .row:hover {
+    -moz-box-shadow: 0px -1px 2px #d7ddd5;
+    -webkit-box-shadow: 0px -1px 2px #d7ddd5;
+}
+.task-table .row:hover .s,
+.task-table .row:hover .p,
+.task-table .row:hover .due,
+.task-table .row:hover .del,
+.task-table .row:hover .followers
+ {
+    z-index: 100;
+}
+.loadbar .text span {
+    background: url('img/loadbar.gif') no-repeat right;
+}
+.task-table .row:hover.loadbar .text span {
+    background: url('img/loadbar.gif') no-repeat 469px;
+}
+.task-table .due {
+    position: absolute;
+    left: 515px;
+    width: 65px;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+}
+.task-table .editable {
+    display: block;
+}
+.task-table .del {
+    width: 12px;
+    height: 2em;
+    margin: 0 9px 0 16px;
+    position: absolute;
+    left: 592px;
+}
+.task-table .del a {
+    display: block;
+    width: 12px;
+    margin-top: 5px;
+    height: 13px;
+    text-indent: -9999px;
+    background: url('/css/img/sprite.png') no-repeat -254px -31px;
+}
+.task-table .row:hover .del a {
+    background-position: -254px 0;
+}
+.task-table .row.deleted {
+    color: #999;
+}
+.task-table .row.deleted:hover .del a {
+    background-position: -492px 0;
+}
+.task-table .row:hover .followers > a {
+    background-position: -244px 0;
+}
+.task-table .followers {
+    position: absolute;
+    height: 2em;
+    width: 10px;
+    left: 616px;
+}
+.task-table .followers > a {
+    display: block;
+    width: 10px;
+    height: 13px;
+    margin-top: 5px;
+    background: url('/css/img/sprite.png') no-repeat -244px -31px;
+}
+.task-table .followers ul {
+    display: none;
+    width: 120px;
+    list-style: none;
+    line-height: 30px;
+    margin: 0;
+    padding: 0;
+    top: 0; left: 20px;
+    position: absolute;
+    background: #fbfbfb;
+    z-index: 10;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+.task-table .followers * {
+    cursor: pointer;
+}
+.task-table .followers li {
+    list-style: none;
+    padding: 0 .25em;
+    margin: 0;
+}
+.task-table .followers li:first-child:hover {
+    -moz-border-radius-topleft: 8px;
+    -moz-border-radius-topright: 8px;
+    -webkit-border-top-left-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+}
+.task-table .followers li:last-child:hover {
+    -moz-border-radius-bottomleft: 8px;
+    -moz-border-radius-bottomright: 8px;
+    -webkit-border-bottom-left-radius: 8px;
+    -webkit-border-bottom-right-radius: 8px;
+    background: #eee;
+}
+.task-table .followers li:hover {
+    background: #eee;
+}
+.task-table .followers:hover ul {
+    display: block;
+}
+
+
+/*****************************************************************************/
+/*
+/* Pager
+/*
+/*****************************************************************************/
+.pager {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    list-style: none;
+    padding: .5em 0 0 0;
+    text-align: center;
+}
+.pager li {
+    display: inline;
+    list-style: none;
+}
+.pager a, .pager span {
+    text-align: center;
+    display: inline-block;
+    padding: 0 .5em;
+    margin: 0;
+    text-decoration: none;
+    color: #000;
+    outline: 0;
+}
+.pager a:hover
+, .pager .current {
+    color: #c12;
+}
+
+/*****************************************************************************/
+/*
+/* Mini box
+/*
+/*****************************************************************************/
+.mini-box {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    margin-left: -620px;
+    height: 100%;
+    width: 280px;
+    -moz-box-shadow: 1px 12px 12px #000;
+    -webkit-box-shadow: 1px 12px 12px #000;
+    background: #fff;
+}
+
+.mini-box .pager {
+    bottom: 35px;
+}
+
+.mini-box .title {
+    text-align: center;
+    float: left;
+    width: 176px;
+    padding: 15px 0 5px 0;
+    margin: 0;
+    height: 36px;
+    font-family: Georgia, freeserif, serif;
+    font-size: 26px;
+    font-weight: normal;
+}
+
+.mini-box .row:nth-child(2n) {
+    background: #f5fcf4;
+}
+.mini-box .row.ok {
+    background: #e0facf;
+}
+.mini-box .row.err {
+    background: #fbe9e9;
+}
+
+.mini-box .tabs .icon {
+    background: url('/css/img/menu-bg.png') repeat-x;
+    float: left;
+    padding: 15px;
+    cursor: pointer;
+    position: relative;
+}
+
+.mini-box .icon .c {
+    font-size: 8px;
+    color: #a2a2a2;
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    text-align: center;
+    width: 100%;
+}
+.mini-box .tabs .icon:hover
+, .mini-box .tabs .icon.active {
+    background: #fbfbfb;
+}
+.mini-box .tabs .icon a {
+    text-align: center;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    display: block;
+    background: url('/css/img/sprite.png') no-repeat -124px -31px;
+}
+.mini-box .tabs .icon.planner {
+    -moz-border-radius-bottomleft: 16px;
+    -webkit-border-bottom-left-radius: 16px;
+}
+.mini-box .tabs .icon.trash a {
+    background-position: -146px -31px;
+}
+.mini-box .tabs .icon.planner:hover a
+, .mini-box .tabs .icon.planner.active a {
+    background-position: -168px -31px;
+}
+.mini-box .tabs .icon.trash:hover a
+, .mini-box .tabs .icon.trash.active a {
+    background-position: -190px -31px;
+}
+
+.table {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.mini-box .row {
+    clear: both;
+    padding: 0 .5em;
+    height: 30px;
+    line-height: 2.5em;
+}
+.mini-box .row .td {
+    float: left;
+    margin: 0;
+}
+.mini-box .row:hover {
+    padding-left: 0;
+    -moz-box-shadow: 0px -1px 2px #d7ddd5;
+    -webkit-box-shadow: 0px -1px 2px #d7ddd5;
+}
+
+.mini-box .row.ok:hover .text {
+    background: #e0facf;
+}
+.mini-box .row.err:hover .text {
+    background: #fbe9e9;
+}
+.mini-box .row:hover .text {
+    padding-left: .5em;
+    background: #e9f0e6;
+    height: auto;
+    position: absolute;
+    overflow: visible;
+    z-index: 1;
+    width: 235px;
+    padding-right: 39px;
+    -moz-box-shadow: 0px 2px 2px #d7ddd5;
+    -webkit-box-shadow: 0px 2px 2px #d7ddd5;
+}
+.mini-box .row:hover .del,
+.mini-box .row:hover .plan {
+    z-index: 100;
+}
+.mini-box .text {
+    display: block;
+    height: 2em;
+    overflow: hidden;
+    width: 235px;
+}
+
+.mini-box .del
+, .mini-box .plan {
+    position: absolute;
+    left: 262px;
+    width: 12px;
+    height: 2em;
+    margin: 0;
+}
+.mini-box .plan {
+    left: 245px;
+}
+.mini-box .row.deleted {
+    color: #999;
+}
+.mini-box .row.deleted:hover .del a {
+    background-position: -492px 0;
+}
+.mini-box .del a
+, .mini-box .plan a {
+    display: block;
+    width: 12px;
+    margin-top: 5px;
+    height: 13px;
+    text-indent: -9999px;
+    background: url('/css/img/sprite.png') no-repeat -254px -31px;
+}
+.mini-box .plan a {
+    background: url('/css/img/sprite.png') no-repeat -266px -31px;
+}
+.mini-box .row:hover .del a {
+    background-position: -254px 0;
+}
+.mini-box .row:hover .undo a {
+    background: url('/css/img/sprite.png') no-repeat -492px 0;
+}
+.mini-box .row:hover .plan a {
+    background-position: -266px 0;
+}

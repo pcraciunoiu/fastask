@@ -1,0 +1,87 @@
+/*****************************************************************************/
+/*
+/* Profile box
+/*
+/*****************************************************************************/
+.profile-box {
+    position: fixed;
+    top: 340px;
+    left: 50%;
+    margin-left: 340px;
+    min-height: 257px;
+    height: 100%;
+    padding: 12px;
+    width: 246px;
+    -moz-box-shadow: 1px 1px 12px #000;
+    -webkit-box-shadow: 1px 1px 12px #000;
+    -moz-border-radius-topleft: 16px;
+    -moz-border-radius-topright: 16px;
+    -webkit-border-top-left-radius: 16px;
+    -webkit-border-top-right-radius: 16px;
+    background: #fff;
+    line-height: 1.6em;
+}
+.profile-box .loading {
+    background: #fff url('img/wait2.gif') no-repeat center;
+}
+
+.profile-box .title {
+    text-align: center;
+    margin: 16px auto 0 auto;
+    padding-bottom: .3em;
+    font-family: Georgia, freeserif, serif;
+    font-size: 26px;
+    font-weight: normal;
+}
+.profile-box label {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    padding: .3em;
+}
+
+.profile-box .info-box {
+    color: #8f8f8f;
+    font-size: 80%;
+    display: block;
+}
+.profile-box .steps {
+    float: right;
+    margin-right: -40px;
+}
+.profile-box .steps .on {
+    font-weight: bold;
+}
+
+.profile-box input[type="text"] {
+    width: 232px;
+}
+.profile-box input[type="password"] {
+    width: 188px;
+}
+
+.profile-box .submit {
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    position: absolute;
+    color: #000;
+    top: 23px;
+    right: -40px;
+    background: #d2e8c8;
+    border: 0;
+    padding: 0; margin: 0;
+    height: 20px;
+    width: 50px;
+    font-family: Georgia, "Times New Roman", Times, freeserif, serif;
+}
+
+.profile-box .links {
+    display: block;
+    text-align: center;
+    margin-top: 1em;
+}
+
+.profile-box .links a {
+    padding: .2em 1em;
+}

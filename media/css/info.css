@@ -1,0 +1,32 @@
+html
+, body {
+    height: 100%;
+    margin: 0; padding: 0;
+    text-align: center;
+}
+body {
+    font-family: Verdana, Helvetica, Arial, Tahoma, sans-serif;
+    font-size: 12px;
+    padding: 0; margin: 0;
+    line-height: 2em;
+    background: #d6d6d6 url('img/bg-gradient.jpg') repeat-x;
+}
+
+div.construction {
+    background: #f5fcf2;
+    height: 190px; width: 380px;
+    position: absolute; left: 50%; top: 50%;
+    margin-top: -95px;
+    margin-left: -190px;
+    -moz-box-shadow: 1px 1px 12px #000;
+    -webkit-box-shadow: 1px 1px 12px #000;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    padding: 10px;
+}
+
+.construction h1 {
+    font-size: 150%;
+    padding: 0; margin: 5px 10px;
+}
+

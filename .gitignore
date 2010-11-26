@@ -1,2 +1,9 @@
 *.pyc
+*.pyo
+pip-log.txt
+**-all.css
+**-min.css
+**-all.js
+**-min.js
+tmp
 settings_*.py

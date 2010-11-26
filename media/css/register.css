@@ -1,0 +1,233 @@
+html
+, body {
+    height: 100%;
+    margin: 0; padding: 0;
+    text-align: center;
+}
+body {
+    font-family: Verdana, Helvetica, Arial, Tahoma, sans-serif;
+    font-size: 12px;
+    padding: 0; margin: 0;
+    line-height: 1em;
+    background: #d6d6d6 url('img/bg-gradient.jpg') repeat-x;
+}
+
+.nojs {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -300px;
+    margin-top: -50px;
+    padding-top: 25px;
+    text-align: center;
+    width: 600px;
+    height: 50px;
+    -moz-box-shadow: 1px 1px 12px #000;
+    -webkit-box-shadow: 1px 1px 12px #000;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    background: #f5fcf2;
+}
+
+div.register {
+    background: #f5fcf2;
+    height: 290px; width: 476px;
+    position: absolute; left: 50%; top: 50%;
+    margin-top: -145px;
+    margin-left: -238px;
+    -moz-box-shadow: 1px 1px 12px #000;
+    -webkit-box-shadow: 1px 1px 12px #000;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+}
+
+input[type="text"]
+, input[type="password"]{
+    width: 65%;
+    border: 1px solid #d2e8c8;
+}
+
+a#account {
+    color: #8f8f8f;
+    text-decoration: none;
+    font-size: 80%;
+}
+
+#forgot {
+    color: #949393;
+}
+
+#noaccount {
+    background: #eee;
+    line-height: 1.25em;
+    display: block;
+    position: absolute;
+    margin: 0;
+    padding: 13px 15px 0;
+    width: 140px;
+    text-align: center;
+    top: 110px;
+    height: 37px;
+    -moz-border-radius-bottomleft: 16px;
+    -webkit-border-bottom-left-radius: 16px;
+}
+
+input[type="submit"] {
+    font-size: 180%;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #d2e8c8;
+    border: 0;
+    height: 50px;
+    width: 118px;
+    -moz-border-radius-bottomright: 16px;
+    -webkit-border-bottom-right-radius: 16px;
+    font-family: Georgia, "Times New Roman", Times, freeserif, serif;
+}
+
+input[type="text"]
+, input[type="password"]{
+    width: 170px;
+    border: 1px solid #d2e8c8;
+}
+
+input.available
+, input[name="email"].valid {
+    border: 1px solid #0f0;
+}
+input.unavailable, input.invalid {
+    border: 1px solid #f00;
+}
+
+label {
+    display: block;
+    padding: 5px 0;
+}
+label span.label {
+    text-align: right;
+    width: 110px;
+    padding-right: 0.3em;
+    display: inline-block;
+}
+
+span.info-icon {
+    display: inline-block;
+    width: 180px;
+    height: 20px;
+}
+span.info
+, span.icon {
+    display: none;
+}
+span.info.on {
+    display: inline-block;
+    width: 136px;
+    text-align: left;
+    margin-left: 10px;
+}
+
+span.icon.on {
+    background: url('/css/img/sprite.png') no-repeat -204px 0;
+    display: inline-block;
+    position: relative;
+    top: 4px;
+    width: 20px;
+    height: 20px;
+}
+span.icon.invalid {
+    background-position: -224px 0;
+}
+span.icon.valid {
+    background-position: -184px 0;
+}
+
+span.indicator {
+    display: inline-block;
+    width: 172px;
+}
+
+span.indicator {
+    text-align: left;
+}
+
+span.s {
+    background: url('/css/img/sprite.png') no-repeat -104px -31px;
+    width: 20px;
+    height: 20px;
+    margin: 0 12px 0 0;
+    position: relative;
+    top: 4px;
+    padding: 0;
+    display: inline-block;
+}
+span.s.s-5 {
+    margin-right: 0;
+}
+span.on.s-1 {
+    background-position: -104px 0;
+}
+span.on.s-2 {
+    background-position: -124px 0;
+}
+span.on.s-3 {
+    background-position: -144px 0;
+}
+span.on.s-4 {
+    background-position: -184px 0;
+}
+span.on.s-5 {
+    background-position: -184px 0;
+}
+
+.strength {
+    color: #949393;
+}
+.strength .info-icon {
+    position: relative;
+}
+.strength .info-icon span {
+    position: absolute;
+    width: 180px;
+    text-align: center;
+    right: 0;
+    top: 0;
+    line-height: 2em;
+}
+
+#account {
+    background: #eee;
+    line-height: 1.25em;
+    display: block;
+    position: absolute;
+    margin: 0;
+    padding: 13px 15px 0;
+    width: 328px;
+    text-align: left;
+    top: 240px;
+    left: 0;
+    height: 37px;
+    -moz-border-radius-bottomleft: 16px;
+    -webkit-border-bottom-left-radius: 16px;
+}
+
+ul {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    padding: 10px 20px;
+    text-align: center;
+    width: 436px;
+    position: absolute; left: 50%; top: 50%;
+    margin-top: 160px;
+    margin-left: -238px;
+    -moz-box-shadow: 1px 1px 12px #000;
+    -webkit-box-shadow: 1px 1px 12px #000;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    background: #f5fcf2;
+    text-align: left;
+    line-height: 2em;
+    list-style: none;
+}
