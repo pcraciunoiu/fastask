@@ -4,6 +4,8 @@
 
 ipython==0.10
 nose==0.11.1
+mock
+pyquery
 
 -e git://github.com/robhudson/django-debug-toolbar.git#egg=django_debug_toolbar
 -e git://github.com/jbalogh/django-nose.git#egg=django_nose

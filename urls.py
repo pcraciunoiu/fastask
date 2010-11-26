@@ -11,4 +11,6 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     # This is better last
     (r'^', include('dashboards.urls')),
+    # Users
+    ('', include('users.urls')),
 )

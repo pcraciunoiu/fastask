@@ -9,6 +9,8 @@ LOG_LEVEL = logging.DEBUG
 ROOT = os.path.dirname(os.path.abspath(__file__))
 path = lambda *a: os.path.join(ROOT, *a)
 
+ROOT_PACKAGE = os.path.basename(ROOT)
+
 ADMINS = ()
 
 MANAGERS = ADMINS
@@ -96,6 +98,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.transaction.TransactionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'commonware.middleware.NoVarySessionMiddleware',
     'commonware.middleware.FrameOptionsHeader',
@@ -121,10 +124,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'common',
+    'jingo_minify',
+    ROOT_PACKAGE,
+    'users',
     'dashboards',
     'cronjobs',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
 )
 
 # Extra apps for testing
@@ -134,6 +138,8 @@ if DEBUG:
         'django_nose',
         'test_utils',
     )
+    # Fixtures don't seem to be loading at the moment
+    FIXTURE_DIRS = ('apps/users/fixtures',)
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
 TEST_UTILS_NO_TRUNCATE = ('django_content_type',)
@@ -169,7 +175,7 @@ MINIFY_BUNDLES = {
             'css/notification.css',
             'css/autocomplete.css',
         ),
-        'reglogin': (
+        'users': (
             'css/errors.css',
             'css/info.css',
             'css/invite.css',
@@ -193,7 +199,7 @@ MINIFY_BUNDLES = {
             'js/profile.js',
             'js/main.js',
         ),
-        'reglogin': (
+        'users': (
             'js/libs/jquery.min.js',
             'js/register.js',
         ),
@@ -225,6 +231,9 @@ TEST_SPHINXQL_PORT = 3418
 SEARCH_MAX_RESULTS = 1000
 
 # Auth and permissions related constants
+AUTHENTICATION_BACKENDS = (
+    'users.backends.Sha256Backend',
+)
 LOGIN_URL = '/users/login'
 LOGOUT_URL = '/users/logout'
 LOGIN_REDIRECT_URL = "/"
