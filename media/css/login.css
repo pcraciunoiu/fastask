@@ -1,36 +1,4 @@
-html
-, body {
-    height: 100%;
-    margin: 0; padding: 0;
-    text-align: center;
-}
-body {
-    font-family: Verdana, Helvetica, Arial, Tahoma, sans-serif;
-    font-size: 12px;
-    padding: 0; margin: 0;
-    line-height: 2em;
-    background: #d6d6d6 url('img/bg-gradient.jpg') repeat-x;
-}
-
-.nojs {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-left: -300px;
-    margin-top: -50px;
-    padding-top: 25px;
-    text-align: center;
-    width: 600px;
-    height: 50px;
-    -moz-box-shadow: 1px 1px 12px #000;
-    -webkit-box-shadow: 1px 1px 12px #000;
-    -moz-border-radius: 16px;
-    -webkit-border-radius: 16px;
-    background: #f5fcf2;
-}
-
-div.login
-, div.reset {
+#login, #reset {
     background: #f5fcf2;
     height: 170px; width: 280px;
     position: absolute; left: 50%; top: 50%;
@@ -40,50 +8,55 @@ div.login
     -webkit-box-shadow: 1px 1px 12px #000;
     -moz-border-radius: 16px;
     -webkit-border-radius: 16px;
+    display: none;
 }
 
-.login label span {
-    width: 72px;
+#fields {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#fields li {
+    margin: 0;
+    padding: 0;
+}
+
+
+#fields label {
+    cursor: pointer;
     display: inline-block;
     text-align: right;
+    width: 72px;
 }
 
-#user, #pass {
-    display: block;
-    cursor: pointer;
+#fields li {
     padding: 0 25px;
 }
-#user {
+#fields #user {
     padding: 0 25px 15px;
     margin-top: 25px;
 }
 input[type="text"]
 , input[type="password"]{
-    width: 65%;
     border: 1px solid #d2e8c8;
+    padding: 2px;
+    width: 145px;
 }
 
-.login a {
+#login a {
     color: #8f8f8f;
     text-decoration: none;
-    position: relative;
-    top: -5px;
     margin-left: 20px;
     font-size: 80%;
 }
 
-.login ul a {
-    font-size: 100%;
-    position: static;
-    margin-left: 0;
-    top: 0;
-}
 
 #forgot {
     color: #949393;
 }
 
-#noaccount {
+#login #noaccount {
     background: #eee;
     line-height: 1.25em;
     display: block;
@@ -149,7 +122,7 @@ input[type="submit"] {
     margin-top: 10px;
 }
 
-ul {
+.errorlist {
     position: fixed;
     top: 50%;
     left: 50%;

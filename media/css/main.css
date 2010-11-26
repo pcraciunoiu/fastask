@@ -4,11 +4,13 @@
 /*
 /*****************************************************************************/
 body {
+    background: #d6d6d6 url('../img/bg-gradient.jpg') repeat-x;
     font-family: Verdana, Helvetica, Arial, Tahoma, sans-serif;
     font-size: 12px;
+    height: 100%;
+    line-height: 1em;
     padding: 0; margin: 0;
-    line-height: 2em;
-    background: #d6d6d6 url('img/bg-gradient.jpg') repeat-x;
+    text-align: center;
 }
 .frt {
     float: right;
@@ -53,7 +55,7 @@ a:hover {
     left: 50%;
     margin-left: -300px;
     margin-top: -38px;
-    padding-top: 25px;
+    padding-top: 38px;
     text-align: center;
     width: 600px;
     height: 50px;
@@ -67,7 +69,7 @@ a:hover {
 .loading {
     display: none;
     width: 100%;
-    background: url('img/wait2.gif') no-repeat center;
+    background: url('../img/wait2.gif') no-repeat center;
     opacity: 0.5;
     filter:alpha(opacity=50);
     -moz-border-radius: 16px;
@@ -80,7 +82,7 @@ a:hover {
 }
 
 .spin {
-    background: url('img/spin.gif') no-repeat center;
+    background: url('../img/spin.gif') no-repeat center;
     display: inline-block;
     position: absolute;
     bottom: 14px;

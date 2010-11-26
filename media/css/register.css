@@ -1,35 +1,4 @@
-html
-, body {
-    height: 100%;
-    margin: 0; padding: 0;
-    text-align: center;
-}
-body {
-    font-family: Verdana, Helvetica, Arial, Tahoma, sans-serif;
-    font-size: 12px;
-    padding: 0; margin: 0;
-    line-height: 1em;
-    background: #d6d6d6 url('img/bg-gradient.jpg') repeat-x;
-}
-
-.nojs {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-left: -300px;
-    margin-top: -50px;
-    padding-top: 25px;
-    text-align: center;
-    width: 600px;
-    height: 50px;
-    -moz-box-shadow: 1px 1px 12px #000;
-    -webkit-box-shadow: 1px 1px 12px #000;
-    -moz-border-radius: 16px;
-    -webkit-border-radius: 16px;
-    background: #f5fcf2;
-}
-
-div.register {
+#register {
     background: #f5fcf2;
     height: 290px; width: 476px;
     position: absolute; left: 50%; top: 50%;
@@ -39,15 +8,18 @@ div.register {
     -webkit-box-shadow: 1px 1px 12px #000;
     -moz-border-radius: 16px;
     -webkit-border-radius: 16px;
+    display: none;
 }
 
 input[type="text"]
 , input[type="password"]{
-    width: 65%;
     border: 1px solid #d2e8c8;
+    line-height: 2em;
+    padding: 2px;
+    width: 65%;
 }
 
-a#account {
+#account {
     color: #8f8f8f;
     text-decoration: none;
     font-size: 80%;
@@ -101,11 +73,18 @@ input.unavailable, input.invalid {
     border: 1px solid #f00;
 }
 
-label {
+#fields {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#fields li {
     display: block;
+    margin: 0;
     padding: 5px 0;
 }
-label span.label {
+#fields li label {
     text-align: right;
     width: 110px;
     padding-right: 0.3em;
@@ -119,6 +98,7 @@ span.info-icon {
 }
 span.info
 , span.icon {
+    font-size: 100%;
     display: none;
 }
 span.info.on {
@@ -128,8 +108,12 @@ span.info.on {
     margin-left: 10px;
 }
 
+#strength .info-icon {
+    height: 1em;
+}
+
 span.icon.on {
-    background: url('/css/img/sprite.png') no-repeat -204px 0;
+    background: url('../img/sprite.png') no-repeat -204px 0;
     display: inline-block;
     position: relative;
     top: 4px;
@@ -153,7 +137,7 @@ span.indicator {
 }
 
 span.s {
-    background: url('/css/img/sprite.png') no-repeat -104px -31px;
+    background: url('../img/sprite.png') no-repeat -104px -31px;
     width: 20px;
     height: 20px;
     margin: 0 12px 0 0;
@@ -212,7 +196,7 @@ span.on.s-5 {
     -webkit-border-bottom-left-radius: 16px;
 }
 
-ul {
+ul.errorlist {
     position: fixed;
     top: 50%;
     left: 50%;

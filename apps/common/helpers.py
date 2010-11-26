@@ -3,7 +3,6 @@ import json as jsonlib
 import re
 import urlparse
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import QueryDict
 from django.utils.encoding import smart_unicode, smart_str
@@ -12,7 +11,6 @@ from django.utils.tzinfo import LocalTimezone
 
 from jingo import register, env
 import jinja2
-from pytz import timezone
 
 
 @register.filter
@@ -24,8 +22,7 @@ def paginator(pager):
 @register.function
 def url(viewname, *args, **kwargs):
     """Helper for Django's ``reverse`` in templates."""
-    locale = kwargs.pop('locale', None)
-    return reverse(viewname, locale=locale, args=args, kwargs=kwargs)
+    return reverse(viewname, args=args, kwargs=kwargs)
 
 
 @register.filter

@@ -1,22 +1,49 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "users/base.html" %}
+{% extends "layout/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
-{% set title = _('Register') %}
+{% set styles = ('register',) %}
+{% set scripts = ('register',) %}
+{% set title = 'Register' %}
 {% set classes = 'register' %}
 
 {% block content %}
-  <article id="register" class="main">
-    <h1>{{ _('Register') }}</h1>
+  <article id="register" class="main js-only">
+    <h1>Register</h1>
     {{ errorlist(form) }}
-    <form method="post" action="">
+    <form method="post" action="" data-username="{{ url('users.available') }}">
       {{ csrf() }}
-      <ul>
-        {% for field in form %}
-          <li>{{ field }} {{ field|safe }}</li>
-        {% endfor %}
+      <ul id="fields">
+      {% for field in form %}
+        <li>
+          {{ field.label_tag()|safe }}
+          {{ field|safe }}
+          <span class="info-icon">
+            <span class="icon"></span>
+            <span class="info">{{ field.help_text }}</span>
+          </span>
+        </li>
+        {% if field.name == 'password' %}
+        <li id="strength">
+          <label>Strength:</label>
+          <span class="indicator">
+            <span class="s s-1"></span>
+            <span class="s s-2"></span>
+            <span class="s s-3"></span>
+            <span class="s s-4"></span>
+            <span class="s s-5"></span>
+          </span>
+          <span class="info-icon">
+            <span class="info">Very Weak</span>
+          </span>
+        </li>
+        {% endif %}
+      {% endfor %}
       </ul>
       <div class="submit">
-        <input type="submit" value="{{ _('Register') }}" />
+        <input type="submit" value="register" />
+        <a id="account" href="{{ url('users.login') }}">
+          Already have an account? Log in!<br/>
+          * Password must be at least 5 characters.</a>
       </div>
     </form>
   </article>

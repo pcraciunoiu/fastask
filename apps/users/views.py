@@ -1,26 +1,25 @@
+import json
 import urlparse
 
-from django import http
 from django.conf import settings
 from django.contrib import auth
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.views.decorators.http import require_http_methods
+from django.http import HttpResponseRedirect, HttpResponse
+from django.views.decorators.http import require_http_methods, require_POST
 
 import jingo
 
 from common.decorators import ssl_required, logout_required
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
-from users.forms import RegisterForm
+from users.forms import RegisterForm, UserForm, AuthenticationForm
 
 
 @ssl_required
 def login(request):
     """Try to log the user in."""
-    auth.logout(request)
     next_url = _clean_next_url(request) or settings.LOGIN_REDIRECT_URL
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(next_url)
 
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
@@ -60,14 +59,25 @@ def register(request):
             user = form.save(commit=False)
             # TODO: Send registration email for confirmation.
             user.is_active = True
-            user.set_password(form['password1'].data)
+            user.set_password(form['password'].data)
             user.save()
-            return jingo.render(request, 'users/register_done.html')
+            return login(request)
     else:  # request.method == 'GET'
         form = RegisterForm()
     return jingo.render(request, 'users/register.html',
                         {'form': form})
 
+
+@ssl_required
+@logout_required
+@require_POST
+def available(request):
+    form = UserForm(request.POST)
+    available = 0
+    if form.is_valid():
+        available = 1
+    data = json.dumps({'available': available})
+    return HttpResponse(data, mimetype='application/json')
 
 
 def _clean_next_url(request):

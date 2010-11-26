@@ -16,7 +16,7 @@ function isValidUsername(in_test) {
         return false;
     }
 
-    var pattern = new RegExp(/^([a-z0-9\-_]{3,50})$/i);
+    var pattern = new RegExp(/^([a-z0-9]{4,30})$/i);
     return pattern.test(in_test);
 }
 
@@ -47,10 +47,11 @@ function passwordStrength(password) {
 
 
 $(document).ready(function() {
-    var   in_username = $('.register input[name="username"]')
-        , in_email = $('.register input[name="email"]')
-        , in_password = $('.register input[name="password"]')
-        , in_password_confirm = $('.register input[name="password_confirm"]')
+    $('body').addClass('js');
+    var   in_username = $('#register input[name="username"]')
+        , in_email = $('#register input[name="email"]')
+        , in_password = $('#register input[name="password"]')
+        , in_password_confirm = $('#register input[name="password2"]')
         , password_indication = {
             'text'     : ['Very Weak', 'Weak', 'Better',
                 'Medium', 'Strong', 'Strongest'],
@@ -61,37 +62,31 @@ $(document).ready(function() {
     /**
      * Init
      */
-    $('#content .nojs').hide();
-    $('#content .register').show();
-    $('#content .login').show();
-
-
     in_password.keyup(function () {
             var score = passwordStrength(in_password.val());
         handle_validation(in_password, function () {
             return score !== 0;
         });
-        in_password.parents('label').next().find('.info')
+        in_password.closest('li').next().find('.info')
             .html(password_indication['text'][
                 password_indication['strength'][score]
             ]);
-        for (i = 0; i < 6; i++) {
-            $('.s-' + i).removeClass('on');
-        }
 
         in_password_confirm.keyup();
 
-        if (score <= 0) return;
         for (i = 0; i < 6; i++) {
-            if (i > score) break;
-            $('.s-' + i).addClass('on');
+            if (i > score) {
+                $('.s-' + i).removeClass('on');
+            } else {
+                $('.s-' + i).addClass('on');
+            }
         }
     });
 
     in_password_confirm.keyup(function () {
         if (in_password.val().length <= 0) return;
         if (!PASS_CONFIRM_INIT) {
-            PASS_CONFIRM_INIT = in_password_confirm.parents('label')
+            PASS_CONFIRM_INIT = in_password_confirm.closest('li')
                 .find('.info').html();
         }
         handle_validation(in_password_confirm, function () {
@@ -99,10 +94,10 @@ $(document).ready(function() {
             return pass === in_password.val();
         });
         if (in_password_confirm.hasClass('valid')) {
-            in_password_confirm.parents('label').find('.info')
+            in_password_confirm.closest('li').find('.info')
                 .html('Bingo!');
         } else {
-            in_password_confirm.parents('label').find('.info')
+            in_password_confirm.closest('li').find('.info')
                 .html(PASS_CONFIRM_INIT);
         }
     });
@@ -126,14 +121,14 @@ $(document).ready(function() {
             elem
                 .removeClass()
                 .addClass('invalid');
-            elem.parents('label').find('.icon')
+            elem.closest('li').find('.icon')
                 .removeClass('valid')
                 .addClass('invalid');
         } else {
             elem
                 .removeClass()
                 .addClass('valid');
-            elem.parents('label').find('.icon')
+            elem.closest('li').find('.icon')
                 .removeClass('invalid')
                 .addClass('valid');
         }
@@ -149,7 +144,7 @@ $(document).ready(function() {
         }
         $.ajax({
             type: 'POST',
-            url: '/user/available',
+            url: in_username.closest('form').attr('data-username'),
             dataType: 'json',
             data: {'username': in_username.val()},
             error: function (response, text_status, error) {
@@ -174,18 +169,18 @@ $(document).ready(function() {
     });
 
 
-    $('.register input[type="text"]').focus(function() {
-        $(this).parents('label').children('.info-icon').children().addClass('on');
+    $('#register input[type="text"]').focus(function() {
+        $(this).closest('li').find('.info-icon').children().addClass('on');
     }).blur(function () {
-        if ($(this).parents('label').find('.invalid').length > 0) return;
-        $(this).parents('label').children('.info-icon').children().removeClass('on');
+        if ($(this).closest('li').find('.invalid').length > 0) return;
+        $(this).closest('li').find('.info-icon').children().removeClass('on');
     });
-    $('.register input[type="password"]').focus(function() {
-        $(this).parents('label').children('.info-icon').children().addClass('on');
-        $('.strength .info-icon span').show();
+    $('#register input[type="password"]').focus(function() {
+        $(this).closest('li').find('.info-icon').children().addClass('on');
+        $('#strength .info-icon span').show();
     }).blur(function () {
-        if ($(this).parents('label').find('.invalid').length > 0) return;
-        $(this).parents('label').children('.info-icon').children().removeClass('on');
-        $('.strength .info-icon span').hide();
+        if ($(this).closest('li').find('.invalid').length > 0) return;
+        $(this).closest('li').find('.info-icon').children().removeClass('on');
+        $('#strength .info-icon span').hide();
     });
 });

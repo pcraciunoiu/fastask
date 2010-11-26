@@ -26,14 +26,14 @@
 <body{% if classes %} class="{{ classes }}"{% endif %}>
 
 <div id="main" role="main">
-{% block content %}
   <div class="nojs">
     <script type="text/javascript">
       document.write("Loading...");
     </script>
     <noscript>You must enable javascript to use {{ settings.SITE_TITLE }}.</noscript>
   </div>
-{% endblock %}
+  {% block content %}
+  {% endblock %}
 </div>
 
 <footer id="footer">

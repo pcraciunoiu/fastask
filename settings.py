@@ -30,9 +30,11 @@ DATABASES = {
 
 DEFAULT_FROM_EMAIL = 'team@fastask.net'
 SERVER_EMAIL = 'server-error@fastask.net'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
+
+#
+# Session cookies
+SESSION_COOKIE_SECURE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Cache Settings
 CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
@@ -168,6 +170,8 @@ MINIFY_BUNDLES = {
     'css': {
         'common': (
             'css/main.css',
+        ),
+        'dashboards': (
             'css/modal.css',
             'css/workbox.css',
             'css/list.css',
@@ -175,17 +179,22 @@ MINIFY_BUNDLES = {
             'css/notification.css',
             'css/autocomplete.css',
         ),
-        'users': (
-            'css/errors.css',
-            'css/info.css',
-            'css/invite.css',
+        'login': (
             'css/login.css',
+        ),
+        'register': (
+            #'css/errors.css',
+            #'css/info.css',
+            #'css/invite.css',
             'css/register.css',
         ),
     },
     'js': {
         'common': (
             'js/libs/jquery.min.js',
+            'js/main.js',
+        ),
+        'dashboards': (
             'js/libs/jqModal.js',
             'js/libs/jquery.history.js',
             'js/libs/jquery.autocomplete.pack.js',
@@ -199,19 +208,13 @@ MINIFY_BUNDLES = {
             'js/profile.js',
             'js/main.js',
         ),
-        'users': (
-            'js/libs/jquery.min.js',
+        'register': (
             'js/register.js',
         ),
     },
 }
 
 JAVA_BIN = '/usr/bin/java'
-
-#
-# Session cookies
-SESSION_COOKIE_SECURE = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 #
 # Connection information for Sphinx search
@@ -236,8 +239,8 @@ AUTHENTICATION_BACKENDS = (
 )
 LOGIN_URL = '/users/login'
 LOGOUT_URL = '/users/logout'
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/users/login'
 REGISTER_URL = '/users/register'
 
 # Anonymous user cookie
