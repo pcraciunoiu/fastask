@@ -9,7 +9,7 @@ body {
     font-size: 12px;
     padding: 0; margin: 0;
     line-height: 2em;
-    background: #d6d6d6 url('img/bg-gradient.jpg') repeat-x;
+    background: #d6d6d6 url('../img/bg-gradient.jpg') repeat-x;
 }
 
 div.construction {

@@ -40,7 +40,7 @@
 }
 
 .ac_loading {
-    background: #fff url('/css/img/spin.gif') right center no-repeat;
+    background: #fff url('../img/spin.gif') right center no-repeat;
 }
 
 .ac_odd {

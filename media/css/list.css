@@ -27,7 +27,7 @@
 }
 
 .task-box .tabs .icon {
-    background: url('/css/img/menu-bg.png') repeat-x;
+    background: url('../img/menu-bg.png') repeat-x;
     float: left;
     padding: 15px;
     cursor: pointer;
@@ -54,7 +54,7 @@
     height: 20px;
     cursor: pointer;
     display: block;
-    background: url('/css/img/sprite.png') no-repeat 0 0;
+    background: url('../img/sprite.png') no-repeat 0 0;
 }
 .task-box .tabs .icon.my-tasks {
     padding-left: 35px;
@@ -171,7 +171,7 @@
 .task-box .search {
     float: left;
     width: 112px;
-    background: url('/css/img/menu-bg.png') repeat-x;
+    background: url('../img/menu-bg.png') repeat-x;
     height: 37px;
     padding: 15px 38px 0;
     -moz-border-radius-bottomleft: 16px;
@@ -191,7 +191,7 @@
     width: 14px;
     height: 14px;
     position: absolute;
-    background: url('/css/img/sprite.png') no-repeat -90px 0;
+    background: url('../img/sprite.png') no-repeat -90px 0;
     left: 140px;
     top: 17px;
 }
@@ -265,7 +265,7 @@
     margin-top: 6px;
     height: 12px;
     width: 12px;
-    background: url('/css/img/sprite.png') no-repeat -290px -31px;
+    background: url('../img/sprite.png') no-repeat -290px -31px;
 }
 .task-table .pri_1 a {
     background-position: -278px 0;
@@ -350,10 +350,10 @@
     z-index: 100;
 }
 .loadbar .text span {
-    background: url('img/loadbar.gif') no-repeat right;
+    background: url('../img/loadbar.gif') no-repeat right;
 }
 .task-table .row:hover.loadbar .text span {
-    background: url('img/loadbar.gif') no-repeat 469px;
+    background: url('../img/loadbar.gif') no-repeat 469px;
 }
 .task-table .due {
     position: absolute;
@@ -379,7 +379,7 @@
     margin-top: 5px;
     height: 13px;
     text-indent: -9999px;
-    background: url('/css/img/sprite.png') no-repeat -254px -31px;
+    background: url('../img/sprite.png') no-repeat -254px -31px;
 }
 .task-table .row:hover .del a {
     background-position: -254px 0;
@@ -404,7 +404,7 @@
     width: 10px;
     height: 13px;
     margin-top: 5px;
-    background: url('/css/img/sprite.png') no-repeat -244px -31px;
+    background: url('../img/sprite.png') no-repeat -244px -31px;
 }
 .task-table .followers ul {
     display: none;
@@ -526,7 +526,7 @@
 }
 
 .mini-box .tabs .icon {
-    background: url('/css/img/menu-bg.png') repeat-x;
+    background: url('../img/menu-bg.png') repeat-x;
     float: left;
     padding: 15px;
     cursor: pointer;
@@ -553,7 +553,7 @@
     height: 22px;
     cursor: pointer;
     display: block;
-    background: url('/css/img/sprite.png') no-repeat -124px -31px;
+    background: url('../img/sprite.png') no-repeat -124px -31px;
 }
 .mini-box .tabs .icon.planner {
     -moz-border-radius-bottomleft: 16px;
@@ -646,16 +646,16 @@
     margin-top: 5px;
     height: 13px;
     text-indent: -9999px;
-    background: url('/css/img/sprite.png') no-repeat -254px -31px;
+    background: url('../img/sprite.png') no-repeat -254px -31px;
 }
 .mini-box .plan a {
-    background: url('/css/img/sprite.png') no-repeat -266px -31px;
+    background: url('../img/sprite.png') no-repeat -266px -31px;
 }
 .mini-box .row:hover .del a {
     background-position: -254px 0;
 }
 .mini-box .row:hover .undo a {
-    background: url('/css/img/sprite.png') no-repeat -492px 0;
+    background: url('../img/sprite.png') no-repeat -492px 0;
 }
 .mini-box .row:hover .plan a {
     background-position: -266px 0;

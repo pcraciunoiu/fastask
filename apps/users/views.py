@@ -3,9 +3,11 @@ import urlparse
 
 from django.conf import settings
 from django.contrib import auth
+from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.http import HttpResponseRedirect, HttpResponse
-from django.views.decorators.http import require_http_methods, require_POST
+from django.views.decorators.http import (require_http_methods, require_POST,
+                                          require_GET)
 
 import jingo
 
@@ -77,6 +79,20 @@ def available(request):
     if form.is_valid():
         available = 1
     data = json.dumps({'available': available})
+    return HttpResponse(data, mimetype='application/json')
+
+
+@require_GET
+def list(request):
+    users = User.objects.all()
+    json_users = []
+    for u in users:
+        json_users.append({'current': 1 if u == request.user else 0,
+                           'email': u.email,
+                           'id': u.id,
+                           'last_login': str(u.last_login),
+                           'username': u.username})
+    data = json.dumps({'users': json_users})
     return HttpResponse(data, mimetype='application/json')
 
 

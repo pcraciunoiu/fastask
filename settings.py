@@ -192,7 +192,7 @@ MINIFY_BUNDLES = {
     'js': {
         'common': (
             'js/libs/jquery.min.js',
-            'js/main.js',
+            'js/common.js',
         ),
         'dashboards': (
             'js/libs/jqModal.js',
@@ -206,6 +206,7 @@ MINIFY_BUNDLES = {
             'js/workbox.js',
             'js/modal.js',
             'js/profile.js',
+            'js/debug.js',
             'js/main.js',
         ),
         'register': (

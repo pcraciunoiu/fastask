@@ -22,7 +22,7 @@
     line-height: 1.6em;
 }
 .profile-box .loading {
-    background: #fff url('img/wait2.gif') no-repeat center;
+    background: #fff url('../img/wait2.gif') no-repeat center;
 }
 
 .profile-box .title {

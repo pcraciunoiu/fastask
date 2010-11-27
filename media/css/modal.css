@@ -89,7 +89,7 @@ a.help_trigger:hover .text {
     right: 0; top: 0;
     width: 13px;
     height: 13px;
-    background: url('/css/img/sprite.png') no-repeat -212px -31px;
+    background: url('../img/sprite.png') no-repeat -212px -31px;
     display: block;
 }
 

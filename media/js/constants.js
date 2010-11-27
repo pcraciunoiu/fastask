@@ -105,10 +105,10 @@ FC.titles_html = [
 
 // used with ajax, for performing calls
 FC.paths = {
-    'users': '/user/l/',
-    'list': '/in/t/',
+    'users': $('#constants').attr('data-users-url'),
+    'list': $('#constants').attr('data-all-url'),
     'share': '/user/s/',
-    'groups': '/group/l/'
+    'groups': $('#constants').attr('data-folders-url')
 };
 
 // url parameters (in hash)

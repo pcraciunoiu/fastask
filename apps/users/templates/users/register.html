@@ -7,7 +7,7 @@
 {% set classes = 'register' %}
 
 {% block content %}
-  <article id="register" class="main js-only">
+  <article id="register" class="js-only">
     <h1>Register</h1>
     {{ errorlist(form) }}
     <form method="post" action="" data-username="{{ url('users.available') }}">

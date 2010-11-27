@@ -5,6 +5,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from django.conf import settings
 
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings_local'
+
 config = settings.DATABASES['default']
 config['HOST'] = config.get('HOST', 'localhost')
 config['PORT'] = config.get('PORT', '3306')

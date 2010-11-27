@@ -62,7 +62,7 @@
 .work-box .due-icon {
     position: absolute;
     display: block;
-    background: url('/css/img/sprite.png') no-repeat -302px 0;
+    background: url('../img/sprite.png') no-repeat -302px 0;
     bottom: 8px;
     left: 102px;
     width: 14px;
@@ -72,7 +72,7 @@
 .work-box .share-icon {
     position: absolute;
     display: block;
-    background: url('/css/img/sprite.png') no-repeat -244px 0;
+    background: url('../img/sprite.png') no-repeat -244px 0;
     width: 10px;
     height: 13px;
     bottom: 8px;
@@ -173,7 +173,7 @@
     height: 12px;
     position: relative;
     top: 2px;
-    background: url('/css/img/sprite.png') no-repeat -278px 0;
+    background: url('../img/sprite.png') no-repeat -278px 0;
 }
 .work-box .img.me {
     background-position: -290px 0;
@@ -183,7 +183,7 @@
     position: absolute;
     bottom: 14px;
     left: 14px;
-    background: url('/css/img/sprite.png') no-repeat -317px 0;
+    background: url('../img/sprite.png') no-repeat -317px 0;
     border: 0;
     text-indent: -9999px;
     cursor: pointer;
@@ -198,7 +198,7 @@
     position: absolute;
     bottom: 14px;
     left: 138px;
-    background: url('/css/img/sprite.png') no-repeat -441px 0;
+    background: url('../img/sprite.png') no-repeat -441px 0;
     border: 0;
     text-indent: -9999px;
     cursor: pointer;
