@@ -165,95 +165,27 @@ function List() {
      * Fetching a list
      */
     this.get_lists = function () {
-        // reset search
-        this.last_search_q = '';
+        // store internals for passing around of data
+        FASTASK.list_handler.response = {
+            tasks: FASTASK.data.tasks,
+            groups: FASTASK.data.folders,
+            counts: [[2, 0, 4, 12], [1, 11]],
+            pager: ''
+        };
 
-        for (var i in this.expecting) {
-            if (this.expecting[i]) {
-                this.clear_timeout(i);
+        // build the lists according to responses
+        FASTASK.list_handler.build_lists();
+
+        // unload and unexpect
+        for (var i in FASTASK.list_handler.expecting) {
+            if (FASTASK.list_handler.expecting[i]) {
+                FASTASK.list_handler.unset_loading(i);
+                // done, expecting nothing now
+                FASTASK.list_handler.unexpect(i);
             }
         }
 
-        $.ajax({
-            type: 'GET',
-            url: FASTASK.constants.paths.list + '?g=' + this.group +
-                '&t=' + this.type + '&p=' + this.mainpage +
-                '&u=' + this.minipage + '&tr=' + this.expect_what +
-                '&ep=' + this.expecting[0] + '&n=' + this.main_per_page +
-                '&eu=' + this.expecting[1] + '&m=' + this.mini_per_page,
-            dataType: 'json',
-            beforeSend: function () {
-                // check expecting and loading before requesting
-                for (var i in FASTASK.list_handler.expecting) {
-                    if (FASTASK.list_handler.expecting[i] &&
-                        !FASTASK.list_handler.set_loading(i)) {
-                        return false;
-                    }
-                }
-            },
-            error: function (request, textStatus, error) {
-                // store internals for passing around of data
-                FASTASK.list_handler.request = request;
-                FASTASK.list_handler.textStatus = textStatus;
-                FASTASK.list_handler.error = error;
-                FASTASK.list_handler.response = null;
-                // clear the loading
-                for (var i in FASTASK.list_handler.expecting) {
-                    if (FASTASK.list_handler.expecting[i]) {
-                        FASTASK.list_handler.unset_loading(i);
-                    }
-                }
-                // handle not found
-                if (request.status === 404) {
-                    // still set the title and active tab
-                    if (FASTASK.list_handler.expecting[0]) {
-                        $('.title', FASTASK.constants.lists[0])
-                            .html(FASTASK.constants.titles_html[FASTASK.list_handler.type]);
-
-                        FASTASK.constants.templates.notasks.insertBefore(
-                            $('.table', FASTASK.constants.lists[0]));
-                        $('.table', FASTASK.constants.lists[0])
-                            .children().remove().end()
-                            .html('');
-                    }
-                    // mini list notifies instead, and fails to switch
-                    if (FASTASK.list_handler.expecting[1]) {
-                        if (FASTASK.list_handler.expect_what === 1) {
-                            FASTASK.notif_handler.add(2,
-                                'No tasks found in ' +
-                                FASTASK.constants.titles_plain[5]);
-                        } else {
-                            FASTASK.notif_handler.add(2,
-                                'No tasks found in ' +
-                                FASTASK.constants.titles_plain[6]);
-                        }
-                    }
-
-                    FASTASK.list_handler.update_active_tabs();
-                }
-            },
-            success: function (response, textStatus, request) {
-                // store internals for passing around of data
-                FASTASK.list_handler.response = response;
-                FASTASK.list_handler.textStatus = textStatus;
-                FASTASK.list_handler.request = request;
-                FASTASK.list_handler.error = null;
-
-                // build the lists according to responses
-                FASTASK.list_handler.build_lists();
-
-                // unload and unexpect
-                for (var i in FASTASK.list_handler.expecting) {
-                    if (FASTASK.list_handler.expecting[i]) {
-                        FASTASK.list_handler.unset_loading(i);
-                        // done, expecting nothing now
-                        FASTASK.list_handler.unexpect(i);
-                    }
-                }
-
-                FASTASK.list_handler.update_active_tabs();
-            }
-        });
+        FASTASK.list_handler.update_active_tabs();
     };
 
     /**

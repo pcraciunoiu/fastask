@@ -8,6 +8,7 @@ $(document).ready(function () {
     $('#content .nojs').remove();
 
     // Initialize all the components
+    FASTASK.data = new Data();
     FASTASK.modal_handler = new Modal();
     FASTASK.notif_handler = new Notification();
     FASTASK.list_handler = new List();

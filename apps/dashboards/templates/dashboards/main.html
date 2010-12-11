@@ -9,7 +9,8 @@
   <article id="constants" style="display: none"
     data-folders-url="{{ url('folders.json') }}"
     data-all-url="{{ url('all.json') }}"
-    data-users-url="{{url('users.json') }}">
+    data-users-url="{{url('users.json') }}"
+    data-current-user="{{ json_user(user) }}">
     <div id="data-help">
       <div id="h-top" class="help">
         <h1>Welcome to fastask! Need some help?</h1>

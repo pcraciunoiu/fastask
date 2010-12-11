@@ -169,7 +169,7 @@ def JINJA_CONFIG():
 MINIFY_BUNDLES = {
     'css': {
         'common': (
-            'css/main.css',
+            'css/common.css',
         ),
         'dashboards': (
             'css/modal.css',
@@ -198,8 +198,10 @@ MINIFY_BUNDLES = {
             'js/libs/jqModal.js',
             'js/libs/jquery.history.js',
             'js/libs/jquery.autocomplete.pack.js',
+            'js/libs/json2.js',
             'js/constants.js',
             'js/url.js',
+            'js/data.js',
             'js/notification.js',
             'js/row.js',
             'js/list.js',

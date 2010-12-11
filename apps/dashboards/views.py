@@ -19,7 +19,7 @@ def folders(request):
     return HttpResponse(data, mimetype='application/json')
 
 
-@require_GET
+@require_POST
 def all(request):
     counts = [[2, 0, 4, 12], [1, 11]]
     folders = _get_folders(request)

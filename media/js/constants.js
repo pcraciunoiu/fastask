@@ -6,6 +6,8 @@
  */
 var FASTASK = {};
 
+// Wrap everything in a closure to avoid cluttering the global namespace.
+(function () {  // ------------------ BEGIN WRAP -------------------
 FASTASK.constants = {};
 // Shorthand, save some space.
 FC = FASTASK.constants;
@@ -105,6 +107,7 @@ FC.titles_html = [
 
 // used with ajax, for performing calls
 FC.paths = {
+    'all': $('#constants').data('all-url'),
     'users': $('#constants').attr('data-users-url'),
     'list': $('#constants').attr('data-all-url'),
     'share': '/user/s/',
@@ -199,3 +202,12 @@ FC.workbox = {
 };
 
 FC.help = $('#data-help').html();
+
+FC.current_user = {
+    'username': 'paul',
+    'email': 'paul@fastask.net',
+    'is_authenticated': true,
+    'id': 2
+};
+
+})();  // ------------------ END WRAP -------------------
