@@ -13,7 +13,6 @@ function List() {
     this.response = null;
     this.request = null;
     this.error = null;
-    this.textStatus = null;
 
     // tasks per page
     this.main_per_page = 10;
@@ -167,8 +166,8 @@ function List() {
     this.get_lists = function () {
         // store internals for passing around of data
         FASTASK.list_handler.response = {
-            tasks: FASTASK.data.tasks,
-            groups: FASTASK.data.folders,
+            tasks: FASTASK.data.get_tasks(),
+            groups: FASTASK.data.get_folders(),
             counts: [[2, 0, 4, 12], [1, 11]],
             pager: ''
         };
@@ -288,7 +287,7 @@ function List() {
             json_task = this.response.tasks[i],
             html_task = FASTASK.constants.templates.minirow.clone()
         ;
-        if (json_task.status) {
+        if (json_task.is_done) {
             html_task.addClass('done');
         }
         html_text = html_task.children('.text');
@@ -326,7 +325,7 @@ function List() {
         var task_group, html_text, j, html_followers, json_task, html_task;
         json_task = this.response.tasks[i];
         html_task = FASTASK.constants.templates.mainrow.clone();
-        if (json_task.status) {
+        if (json_task.is_done) {
             html_task.children('.s').children('input')
                 .attr('checked', 'checked');
             if (this.type !== 3) {
@@ -334,7 +333,7 @@ function List() {
             }
         }
         html_task.children('.s').children('input')
-            .bind('click', handle_status);
+            .bind('click', handle_is_done);
         html_task.children('.p')
             .addClass('pri_' + json_task.priority)
             .bind('click', handle_priority);
@@ -441,7 +440,6 @@ function List() {
 
                 // store internals and pass on the activity
                 FASTASK.list_handler.response = response;
-                FASTASK.list_handler.textStatus = textStatus;
                 FASTASK.list_handler.request = request;
                 FASTASK.list_handler.build_lists();
 
@@ -526,7 +524,7 @@ function List() {
         if (this.groups_list) {
             this.groups_list.remove();
         }
-        if (groups.length <= 0) {
+        if (!groups || groups.length <= 0) {
             return;
         }
         var html_g, url_g, i, title_g;
@@ -619,7 +617,7 @@ function List() {
     };
 
     /**
-     * Changing task priority
+     * Changing task.priority
      */
     handle_priority = function (e) {
         FASTASK.row_handler.update_row('priority', $(this));
@@ -627,10 +625,10 @@ function List() {
     };
 
     /**
-     * Changing task status
+     * Changing task.is_done
      */
-    handle_status = function (e) {
-        FASTASK.row_handler.update_row('status', $(this));
+    handle_is_done = function (e) {
+        FASTASK.row_handler.update_row('is_done', $(this));
     };
 
     /**

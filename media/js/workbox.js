@@ -30,32 +30,16 @@ function Workbox() {
     };
 
     this.get_all_groups = function () {
-        // update autocomplete
-        $.ajax({
-            url: FASTASK.constants.paths.groups,
-            type: 'POST',
-            async: true,
-            cache: false,
-            dataType: 'json',
-            timeout: 3000,
-            global: false,
-            error: function(request, textStatus, error) {
-                // fail silently
-                return false;
-            },
-            success: function(data, textStatus, request) {
-                FASTASK.workbox_handler.groups_auto = [];
+        folders = FASTASK.data.get_folders();
 
-                if (data.results.length > 0) {
-                    for (var i in data.results) {
-                        FASTASK.workbox_handler.groups_auto.push(data
-                            .results[i].name);
-                    }
-                }
-                $('textarea', FASTASK.constants.templates.workbox)
-                    .autocomplete(FASTASK.workbox_handler.groups_auto);
+        this.groups_auto = [];
+        if (folders && folders.length > 0) {
+            for (var i in data.results) {
+                this.groups_auto.push(folders.name);
             }
-        });
+        }
+        $('textarea', FASTASK.constants.templates.workbox)
+            .autocomplete(this.groups_auto);
     };
 
 

@@ -25,4 +25,7 @@ $(document).ready(function () {
 
     // this one fires off the calls
     FASTASK.profile_handler = new Profile();
+
+    // sync that task data yo dawg
+    FASTASK.data.sync_data();
 });

@@ -6,27 +6,20 @@
  */
 function Data() {
     FASTASK.data = this;
-    // each of these is keyed by the user/anonuser id
     this.tasks = null;
     this.folders = null;
     this.friends = null;
-    this.current_key = null;  // current key for all of the above
     this.storage = window.localStorage;
-
-    this.get_current_key = function () {
-        if (FASTASK.constants.current_user.is_authenticated) {
-            this.current_key = FASTASK.constants.current_user.id;
-        } else {
-            // TODO: current key for anonymous users
-        }
-    }
+    // queue of requests, populated if offline
+    this.queue = [];
+    this.last_sync = null;
 
     /**
      * Gets data stored at key
      * @param string key
      */
     this._get_data = function (key) {
-        var str_data = this.storage.getItem(this.current_key + '_' + key);
+        var str_data = this.storage.getItem(key);
         return JSON.parse(str_data);
     }
 
@@ -37,7 +30,7 @@ function Data() {
      */
     this._set_data = function (key, data) {
         var str_data = JSON.stringify(data);
-        this.storage.setItem(this.current_key + '_' + key, str_data);
+        this.storage.setItem(key, str_data);
     }
 
     /**
@@ -90,29 +83,34 @@ function Data() {
         }
 
         // is there any modified data in local storage?
-        var last_sync = this._get_data('last_sync');
+        this.last_sync = this._get_data('last_sync');
 
         // have we never synced before in this browser?
-        if (!last_sync) {
+        if (!this.last_sync) {
             // TODO: first-time sync
-            last_sync = {};
-            last_sync.when = new Date().getTime();
-            last_sync.is_modified = false;
+            this.last_sync = {};
+            this.last_sync.when = new Date().getTime();
+            this.last_sync.is_modified = false;
         }
 
-        if (last_sync.is_modified) {
+        if (this.last_sync.is_modified) {
             // TODO: sync modified data
             // load new data on callback afterwards
-            return false;
+            while (this.queue.length > 0) {
+                var ajaxopts = this.queue.pop();
+                $.ajax(ajaxopts);
+            }
+            this._set_data('queue', []);
+            this.last_sync.is_modified = false;
         }
         // data is synced, update sync time
-        this._set_data('last_sync', last_sync);
+        this._set_data('last_sync', this.last_sync);
 
         $.ajax({
             type: 'POST',
-            url: FASTASK.constants.paths.all + '?after=' + last_sync.when,
+            url: FASTASK.constants.paths.all + '?after=' + this.last_sync.when,
             dataType: 'json',
-            data: {'last_sync': last_sync.sync_date},
+            data: {'last_sync': this.last_sync.sync_date},
             beforeSend: function () {
                 // TODO: set sync status and show that we're syncing somewhere
             },
@@ -159,12 +157,49 @@ function Data() {
     this.store_new_data = function(response) {
         this._set_data('tasks', response.tasks);
         this._set_data('folders', response.groups);
+        this._set_data('friends', response.friends);
     }
 
+    /**
+     * Process action from a row. See also row_handler.update_row.
+     */
+    this.process_action = function(task_id, action, data, ajaxopts) {
+        var dataopts = {dataType: 'json'},
+            request = {status: 200},
+            response = {};
+        $.extend(dataopts, ajaxopts);
+
+        dataopts.success = function () {};
+        dataopts.complete = dataopts.success;
+        dataopts.beforeSend = dataopts.success;
+        dataopts.error = function () { alert('error') };
+        dataopts.data = {};
+        dataopts.data[action] = data;
+
+        ajaxopts.beforeSend();
+        // update local storage and send ajax request
+        this.tasks[task_id][action] = data;
+        this._set_data('tasks', this.tasks);
+
+        if (this.is_online()) {
+            $.ajax(dataopts);
+        } else {
+            this.queue.push(dataopts);
+            this.last_sync.is_modified = true;
+            this._set_data('last_sync', this.last_sync);
+            this._set_data('queue', this.queue);
+        }
+
+        response[action] = data;
+        ajaxopts.complete(request, '');
+        ajaxopts.success(response, '', request);
+    }
+
+    // TODO: don't add these if browser does not support them
+    window.addEventListener('online', function() {
+        // sync data when going online
+        FASTASK.data.sync_data();
+    }, true);
     // init stuff
-    this.get_current_key();
-    this.sync_data();
-    this.get_tasks();
-    this.get_folders();
-    this.get_friends();
+    this.queue = this._get_data('queue') || [];
 }

@@ -101,48 +101,38 @@ function Profile() {
     /**
      * Gets and builds the list of users in JSON
      */
-    this.get_users = function () {
-        $.ajax({
-            type: 'GET',
-            url: FASTASK.constants.paths.users,
-            dataType: 'json',
-            error: function (response, text_status, error) {
-                alert('Error getting users.');
-                return false;
-            },
-            success: function (response, textStatus, request) {
-                var html_f, i, current_user;
-                FASTASK.constants.templates.followers
-                    .children()
-                        .remove()
-                        .end()
-                    .html('');
-                for (i in response.users) {
-                    if (response.users[i].current) {
-                        current_user = response.users[i];
-                    }
-                    html_f = FASTASK.constants.templates.follower.clone();
-                    html_f.find('input')
-                        .val(response.users[i].id)
-                        .attr('class', 'u' + response.users[i].id)
-                    ;
-                    html_f.find('span').html(response.users[i].username);
-                    FASTASK.constants.templates.followers.append(html_f);
-                }
-                FASTASK.constants.templates.profile.children('.title')
-                    .prepend(current_user.username);
-                FASTASK.constants.templates.profile.find('input[name="name"]')
-                    .val(current_user.name);
-                FASTASK.constants.templates.profile.find('input[name="email"]')
-                    .val(current_user.email);
+    this.get_friends = function () {
+        var html_f, i,
+            current_user = $('#constants').data('current-user'),
+            friends = FASTASK.data.get_friends() || [];
 
-                // update current user and workbox
-                FASTASK.profile_handler.CURRENT_USER = current_user;
-                FASTASK.workbox_handler.set_share_list();
+        FASTASK.constants.templates.followers
+            .children()
+                .remove()
+                .end()
+            .html('');
+        friends.unshift(current_user);
+        for (i in friends) {
+            html_f = FASTASK.constants.templates.follower.clone();
+            html_f.find('input')
+                .val(friends[i].id)
+                .attr('class', 'u' + friends[i].id)
+            ;
+            html_f.find('span').html(friends[i].username);
+            FASTASK.constants.templates.followers.append(html_f);
+        }
+        FASTASK.constants.templates.profile.children('.title')
+            .prepend(current_user.username);
+        FASTASK.constants.templates.profile.find('input[name="name"]')
+            .val(current_user.name);
+        FASTASK.constants.templates.profile.find('input[name="email"]')
+            .val(current_user.email);
 
-                FASTASK.profile_handler.continue_init();
-            }
-        });
+        // update current user and workbox
+        this.CURRENT_USER = current_user;
+        FASTASK.workbox_handler.set_share_list();
+
+        this.continue_init();
     };
 
     this.continue_init = function () {
@@ -151,6 +141,6 @@ function Profile() {
     };
 
     // init stuff
-    this.get_users();
+    this.get_friends();
     FASTASK.constants.templates.profile.appendTo('#content');
 }

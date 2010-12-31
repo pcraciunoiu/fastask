@@ -7,9 +7,9 @@
 {% block content %}
   <div id="content">
   <article id="constants" style="display: none"
-    data-folders-url="{{ url('folders.json') }}"
+    data-folders-url="{{ url('folders.list') }}"
     data-all-url="{{ url('all.json') }}"
-    data-users-url="{{url('users.json') }}"
+    data-friends-url="{{url('users.friends') }}"
     data-current-user="{{ json_user(user) }}">
     <div id="data-help">
       <div id="h-top" class="help">

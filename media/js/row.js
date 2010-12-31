@@ -29,8 +29,6 @@ function Row() {
     // ajax call results
     this.response = null;
     this.request = null;
-    this.error = null;
-    this.textStatus = null;
 
     /**
      * Extracts data from a row
@@ -38,7 +36,7 @@ function Row() {
     this.extract_data = function () {
         this.task_id = this.t_row.find('input[name="task_id"]')[0].value;
         this.data = {
-            'url': FASTASK.constants.save[this.type] + this.task_id,
+            'url': FASTASK.constants.task_url(this.type, this.task_id),
             'method': 'POST',
             'send': {}
         };
@@ -47,48 +45,47 @@ function Row() {
         case 'priority':
             current = parseInt(this.target.attr('class')
                 .charAt(this.target.attr('class').indexOf('pri_') + 4), 10);
+            // TODO: clean this all up
             this.data.current = current;
             this.data.next = (current + 1) % 3;
+            this.data.send = (current + 1) % 3 + 1;
             break;
-        case 'status':
+        case 'is_done':
+            this.data.send = this.target.is(':checked');
             break;
         case 'undelete':
-            this.data.send.undo = 1;
+            this.data.send = false;
         case 'delete':
+            this.data.send = true;
             if (this.t_row.hasClass('deleted')) {
-                this.data.send.undo = 1;
+                this.data.send = false;
                 this.type = 'undelete';
             }
             FASTASK.notif_handler.start();
             break;
         case 'plan':
             if (FASTASK.list_handler.plan_custom) {
-                this.data.send.due = FASTASK.list_handler.plan_custom;
+                this.data.send = FASTASK.list_handler.plan_custom;
                 FASTASK.list_handler.plan_custom = false;
             }
             break;
         case 'text':
-            this.data.url += '&t=' + FASTASK.list_handler.type;
         case 'due':
             new_text = this.target.val()
                 .replace(/\\\"/g, '"').replace(/\\\'/g, "'");
             if (cancel_edit_task(this.target, new_text)) {
                 return false;
             }
-            this.data.send = {};
-            this.data.send[this.type] = new_text;
+            this.data.send = new_text;
             break;
         case 'follower_add':
-            this.data.send = {
-                'u': this.target.val(),
-                'a': 1
-            };
+            this.data.send = this.target.val();
             break;
         case 'follower_remove':
             if (0 === this.t_row.find('.followers ul input:checked').length) {
                 FASTASK.notif_handler.start();
             }
-            this.data.send = {'u': this.target.val()};
+            this.data.send = this.target.val();
             break;
         default:
             return false;
@@ -144,8 +141,8 @@ function Row() {
             this.target.removeClass('pri_' + this.data.current)
                     .addClass('pri_' + this.response.priority);
             break;
-        case 'status':
-            if (this.response.status) {
+        case 'is_done':
+            if (this.response.is_done) {
                 if (FASTASK.list_handler.type !== 3) {
                     this.t_row.addClass('done');
                 }
@@ -214,7 +211,7 @@ function Row() {
         switch (this.type) {
         case 'priority':
             break;
-        case 'status':
+        case 'is_done':
             if (!this.t_row.hasClass('done')) {
                 this.t_row.removeClass('done');
                 this.target.attr('checked', '');
@@ -276,7 +273,7 @@ function Row() {
 
     /**
      * Updating row
-     * @param type = update type, one of 'priority', 'status'
+     * @param type = update type, one of 'priority', 'is_done'
      * @param target = the target of the event
      */
     this.update_row = function (type, target) {
@@ -291,33 +288,30 @@ function Row() {
         if (!this.extract_data()) {
             return false;
         }
-        // need this inside ajax, scope
-        $.ajax({
+
+        function beforeComplete(request, response) {
+            FASTASK.row_handler.request = request;
+            FASTASK.row_handler.response = response;
+        }
+        FASTASK.data.process_action(this.task_id, this.type, this.data.send,
+           {
             type: this.data.method,
             url: this.data.url,
-            data: this.data.send,
-            dataType: 'json',
             beforeSend: function () {
                 FASTASK.row_handler.set_loading_row();
             },
-            error: function (request, textStatus, error) {
-                FASTASK.row_handler.request = request;
-                FASTASK.row_handler.textStatus = textStatus;
-                FASTASK.row_handler.error = error;
-                FASTASK.row_handler.response = null;
-                FASTASK.row_handler.dispatch_error();
+            complete: function (request, textStatus) {
                 FASTASK.row_handler.unset_loading_row();
-                return false;
+            },
+            error: function (request, textStatus, error) {
+                beforeComplete(request, null);
+                FASTASK.row_handler.dispatch_error();
             },
             success: function (response, textStatus, request) {
-                FASTASK.row_handler.response = response;
-                FASTASK.row_handler.textStatus = textStatus;
-                FASTASK.row_handler.request = request;
-                FASTASK.row_handler.error = null;
+                beforeComplete(request, response);
                 FASTASK.row_handler.dispatch_response();
-                FASTASK.row_handler.unset_loading_row();
             }
-        });
+           });
     };
 
     /**

@@ -1,8 +1,9 @@
 from datetime import datetime
 
-from django.db import models
+from django.contrib import admin
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.db import models
 
 import caching.base
 
@@ -62,7 +63,7 @@ class Task(ModelBase):
     num_followers = models.IntegerField(default=0)
     due = models.DateTimeField(default=datetime.now, db_index=True)
     priority = models.IntegerField(default=TASK_MAX_PRIORITY)
-    done = models.BooleanField(default=False, db_index=True)
+    is_done = models.BooleanField(default=False, db_index=True)
     is_deleted = models.BooleanField(default=False, db_index=True)
     created = models.DateTimeField(default=datetime.now, db_index=True)
     updated = models.DateTimeField(auto_now=True, db_index=True)
@@ -153,3 +154,9 @@ class Friendship(ModelBase):
 
     def __unicode__(self):
         return '%s <-> %s' % (self.to_user.username, self.from_user.username)
+
+
+admin.site.register(Task)
+admin.site.register(Folder)
+admin.site.register(TaskFollowing)
+admin.site.register(Friendship)

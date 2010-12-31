@@ -17,23 +17,28 @@ FC = FASTASK.constants;
 // for timeouts, unless stated, assume milliseconds
 // for sizes, unless stated, assume pixels
 FC.save = {
-    'priority': '/task/pri/',
-    'status': '/task/s/',
-    'delete': '/task/d/',
-    'undelete': '/task/d/',
-    'plan': '/task/plan/',
-    'text': '/task/text/',
-    'due': '/task/due/',
-    'follower_add': '/task/share/',
-    'follower_remove': '/task/share/'
+    'prefix': '/task/',
+    'priority': '/p',
+    'is_done': '/s',
+    'delete': '/d',
+    'undelete': '/d',
+    'plan': '/plan/',
+    'text': '/t',
+    'due': '/due',
+    'follower_add': '/s',
+    'follower_remove': '/s'
 };
+
+FC.task_url = function(action, task_id) {
+    return FC.save['prefix'] + task_id + FC.save[action];
+}
 
 FC.classes = {
     'loadrow': 'loadbar'
 };
 
 FC.strings = {
-    'due': '+7d'
+    'due': 'tomorrow'
 };
 
 FC.timeouts = {
@@ -108,7 +113,7 @@ FC.titles_html = [
 // used with ajax, for performing calls
 FC.paths = {
     'all': $('#constants').data('all-url'),
-    'users': $('#constants').attr('data-users-url'),
+    'friends': $('#constants').attr('data-friends-url'),
     'list': $('#constants').attr('data-all-url'),
     'share': '/user/s/',
     'groups': $('#constants').attr('data-folders-url')
@@ -195,7 +200,7 @@ FC.lists = [
 
 FC.workbox = {
 // default due date
-    'due': '+7d',
+    'due': 'tomorrow',
 
 // default priority
     'priority': '3'

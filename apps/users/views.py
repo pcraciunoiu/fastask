@@ -1,17 +1,16 @@
-import json
 import urlparse
 
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from django.http import HttpResponseRedirect, HttpResponse
-from django.views.decorators.http import (require_http_methods, require_POST,
-                                          require_GET)
+from django.http import HttpResponseRedirect
+from django.views.decorators.http import require_http_methods, require_POST
 
 import jingo
 
 from common.decorators import ssl_required, logout_required
+from common.utils import json_r
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import RegisterForm, UserForm, AuthenticationForm
 
@@ -78,22 +77,22 @@ def available(request):
     available = 0
     if form.is_valid():
         available = 1
-    data = json.dumps({'available': available})
-    return HttpResponse(data, mimetype='application/json')
+    return json_r({'available': available})
 
 
-@require_GET
-def list(request):
-    users = User.objects.all()
-    json_users = []
+def friends(request):
+    return json_r(get_friends(request))
+
+
+def get_friends(request):
+    users = User.objects.exclude(pk=request.user.pk)
+    dict_users = []
     for u in users:
-        json_users.append({'current': 1 if u == request.user else 0,
-                           'email': u.email,
+        dict_users.append({'email': u.email,
                            'id': u.id,
                            'last_login': str(u.last_login),
                            'username': u.username})
-    data = json.dumps({'users': json_users})
-    return HttpResponse(data, mimetype='application/json')
+    return dict_users
 
 
 def _clean_next_url(request):
