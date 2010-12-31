@@ -69,10 +69,8 @@ function Workbox() {
             success: function (response) {
                 FASTASK.list_handler.update_groups(response.groups);
                 if (response.planned) {
-                    FASTASK.list_handler.expect(1);
                     FASTASK.notif_handler.add(3, 'Task planned');
                 } else {
-                    FASTASK.list_handler.expect(0);
                     FASTASK.notif_handler.add(0);
                 }
                 FASTASK.list_handler.get_lists();

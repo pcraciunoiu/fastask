@@ -8,9 +8,6 @@
  * @requires notification.js
  */
 function Row() {
-    // determines which list we're dealing with, main (0) or mini (1)
-    this.box_num = null;
-
     // event target
     this.target = null;
 
@@ -110,8 +107,8 @@ function Row() {
         }
         this_row.addClass(cls);
 
-        clearTimeout(jQuery.data(FASTASK.constants.lists[this.box_num], timeout));
-        jQuery.data(FASTASK.constants.lists[this.box_num], timeout,
+        clearTimeout(jQuery.data(FASTASK.constants.list, timeout));
+        jQuery.data(FASTASK.constants.list, timeout,
             setTimeout(function () {
                 this_row.removeClass('ok err');
             }, FASTASK.constants.timeouts.changed)
@@ -134,7 +131,7 @@ function Row() {
             return false;
         }
         if (this.type !== 'text') {
-            FASTASK.list_handler.reset_timeout(this.box_num);
+            FASTASK.list_handler.reset_timeout();
         }
         switch (this.type) {
         case 'priority':
@@ -168,7 +165,6 @@ function Row() {
             this.t_row.fadeOut('slow', function () {
                 $(this).remove();
                 FASTASK.list_handler.clear_timeout();
-                FASTASK.list_handler.expect(0);
                 FASTASK.list_handler.get_lists();
             });
             break;
@@ -280,8 +276,7 @@ function Row() {
         this.type = type;
         this.target = target;
         this.t_row = target.parents('.row');
-        this.box_num = target.parents('.box').attr('rel');
-        FASTASK.list_handler.clear_timeout(FASTASK.constants.lists[this.box_num]);
+        FASTASK.list_handler.clear_timeout(FASTASK.constants.list);
         if (this.is_loading_row(this.t_row)) {
             return false;
         }

@@ -18,7 +18,6 @@ $(document).ready(function () {
 
     FASTASK.list_handler.set_params(
         FASTASK.url_handler.mainpage,
-        FASTASK.url_handler.minipage,
         FASTASK.url_handler.group,
         FASTASK.url_handler.type
     );

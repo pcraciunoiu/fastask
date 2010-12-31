@@ -5,7 +5,8 @@
  * @requires list.js
  */
 function Url() {
-    var url_handler = this;
+    var url_handler = this,
+        sep = FASTASK.constants.hash_separator;
     // store the initial url
     this.INITIAL_URL = window.location.href;
 
@@ -35,35 +36,19 @@ function Url() {
         url_handler.hash_last = hash;
         var mainpage = parseInt(url_handler.get_url_param(
                 FASTASK.constants.params.mainpage, window.location.href), 10),
-            minipage = parseInt(url_handler.get_url_param(
-                FASTASK.constants.params.minipage, window.location.href), 10),
             group = parseInt(url_handler.get_url_param(
                 FASTASK.constants.params.group, window.location.href), 10),
             type = parseInt(url_handler.get_url_param(
                 FASTASK.constants.params.type, window.location.href), 10);
 
         if (mainpage !== url_handler.mainpage ||
-            minipage !== url_handler.minipage ||
             group !== url_handler.group ||
             type !== url_handler.type) {
 
-            // main list changed, reload it
-            if (mainpage !== url_handler.mainpage ||
-                group !== url_handler.group ||
-                type !== url_handler.type) {
-                FASTASK.list_handler.expect(0);
-            }
-
-            // mini list changed, reload it
-            if (minipage !== url_handler.minipage) {
-                FASTASK.list_handler.expect(1);
-            }
-
             url_handler.mainpage = mainpage;
-            url_handler.minipage = minipage;
             url_handler.group = group;
             url_handler.type = type;
-            FASTASK.list_handler.set_params(mainpage, minipage, group, type);
+            FASTASK.list_handler.set_params(mainpage, group, type);
             if (url_handler.allow_get_lists) {
                 FASTASK.list_handler.get_lists();
             }
@@ -73,7 +58,7 @@ function Url() {
     /**
      * Gets a URL parameter by name from a given URL
      * Only works with the hash
-     * Uses constant FASTASK.constants.hash_separator
+     * Uses constant sep (FASTASK.constants.hash_separator)
      * @param string name param to look for
      * @param (optional) string url what to look in, defaults to
      *     window.location.href
@@ -86,13 +71,12 @@ function Url() {
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
 
         // start searching
-        var regexS = '[\\#;]' + name + '=([^' + FASTASK.constants.hash_separator + ']*)',
+        var regexS = '[\\#' + sep + ']' + name + '=([^' + sep + ']*)',
             regex = new RegExp(regexS),
             results = regex.exec(url);
         if (results === null) {
             // default some parameters
-            if (name === FASTASK.constants.params.mainpage ||
-                name === FASTASK.constants.params.minipage) {
+            if (name === FASTASK.constants.params.mainpage) {
                 return 1;
             }
             if (name === FASTASK.constants.params.group ||
@@ -118,7 +102,7 @@ function Url() {
             i;
         // split url into params
         if (initial) {
-            params_values = initial.split(';');
+            params_values = initial.split(sep);
             for (i in params_values) {
                 param_value = params_values[i].split('=');
                 params[param_value[0]] = param_value[1];
@@ -150,7 +134,7 @@ function Url() {
             if (!params[i]) {
                 continue;
             }
-            new_hash += ';' + i + '=' + params[i];
+            new_hash += sep + i + '=' + params[i];
         }
         window.location.href = this.INITIAL_URL_NOHASH +
             '#' + new_hash.substr(1);
@@ -159,9 +143,6 @@ function Url() {
     // pages:
     // main list page
     this.mainpage = this.get_url_param(FASTASK.constants.params.mainpage, this.INITIAL_URL);
-
-    // mini list page
-    this.minipage = this.get_url_param(FASTASK.constants.params.minipage, this.INITIAL_URL);
 
     // group number
     this.group = this.get_url_param(FASTASK.constants.params.group, this.INITIAL_URL);

@@ -16,16 +16,9 @@ function List() {
 
     // tasks per page
     this.main_per_page = 10;
-    this.mini_per_page = 10;
 
     // list of groups
     this.groups_list = false;
-
-    // which of the two lists to expect
-    this.expecting = [1, 1];
-    // what to expect in the second list
-    // 1 = planner, 2 = trash
-    this.expect_what = 1;
 
     // search value, used in do_search()
     this.search_val = '';
@@ -46,20 +39,17 @@ function List() {
 
     // hash parameters
     this.mainpage = null;
-    this.minipage = null;
     this.group = null;
     this.type = null;
 
     /**
      * Sets the parameters from url hash
      * @param int mainpage the page for the main list
-     * @param int minipage the page for the mini list
      * @param int group the group
      * @param int type indicates the active tab
      */
-    this.set_params = function (mainpage, minipage, group, type) {
+    this.set_params = function (mainpage, group, type) {
         this.mainpage = mainpage;
-        this.minipage = minipage;
         this.group = group;
         this.type = type;
     };
@@ -67,10 +57,8 @@ function List() {
     // Timeouts helpers
     /**
      * Clears the timeouts for list and refresh
-     * @param int li the list to clear
-     *     atm, valid values are 0 (main) or 1 (mini)
      */
-    this.clear_timeout = function (li) {
+    this.clear_timeout = function () {
         if (this.list_timeout) {
             clearTimeout(this.list_timeout);
             clearTimeout(this.refresh_timeout);
@@ -79,13 +67,9 @@ function List() {
 
     /**
      * Resets the timeouts for list and refresh
-     * @param int li the list to clear
-     *     atm, valid values are 0 (main) or 1 (mini)
      */
-    this.reset_timeout = function (li) {
-        this.clear_timeout(li);
-        // we're expecting this now
-        this.expect(li);
+    this.reset_timeout = function () {
+        this.clear_timeout();
         this.list_timeout = setTimeout(function () {
             FASTASK.list_handler.get_lists();
         }, FASTASK.constants.timeouts.changed);
@@ -94,12 +78,9 @@ function List() {
     };
 
     /**
-     * Refreshes all the lists, iterates over this.expecting
+     * Refreshes list.
      */
     this.refresh_all = function () {
-        for (var i in FASTASK.list_handler.expecting) {
-            FASTASK.list_handler.expect(i);
-        }
         FASTASK.list_handler.get_lists();
     };
     // End timeouts helpers
@@ -107,50 +88,26 @@ function List() {
     // Task loading helpers
     /**
      * Mark the list as loading
-     * @param int li the list to clear
-     *     atm, valid values are 0 (main) or 1 (mini)
      * @returns true if request was carried out
      *     or false if not allowed. used to check list is busy
      */
-    this.set_loading = function (li) {
+    this.set_loading = function () {
         // if list is being edited, return false
-        if (this.editing[li]) {
+        if (this.editing) {
             return false;
         }
 
-        FASTASK.constants.lists[li].children('.loading').show();
+        FASTASK.constant.list.children('.loading').show();
         return true;
     };
 
     /**
      * Mark the list as not loading (unset)
-     * @param int li the list to clear
-     *     atm, valid values are 0 (main) or 1 (mini)
      */
-    this.unset_loading = function (li) {
-        FASTASK.constants.lists[li].children('.loading').hide();
+    this.unset_loading = function () {
+        FASTASK.constants.list.children('.loading').hide();
     };
     // End task loading helpers
-
-    /**
-     * Expect a list when rebuilding
-     * @param int li the list to clear
-     *     atm, valid values are 0 (main) or 1 (mini)
-     * @see get_lists for use of this.expecting
-     */
-    this.expect = function (li) {
-        this.expecting[li] = 1;
-    };
-
-    /**
-     * Unxpect a list when rebuilding
-     * @param int li the list to clear
-     *     atm, valid values are 0 (main) or 1 (mini)
-     * @see get_lists for use of this.expecting
-     */
-    this.unexpect = function (li) {
-        this.expecting[li] = 0;
-    };
 
     /**
      * Set a custom plan date
@@ -168,21 +125,15 @@ function List() {
         FASTASK.list_handler.response = {
             tasks: FASTASK.data.get_tasks(),
             groups: FASTASK.data.get_folders(),
-            counts: [[2, 0, 4, 12], [1, 11]],
+            counts: [2, 0, 4, 12],
             pager: ''
         };
 
         // build the lists according to responses
         FASTASK.list_handler.build_lists();
 
-        // unload and unexpect
-        for (var i in FASTASK.list_handler.expecting) {
-            if (FASTASK.list_handler.expecting[i]) {
-                FASTASK.list_handler.unset_loading(i);
-                // done, expecting nothing now
-                FASTASK.list_handler.unexpect(i);
-            }
-        }
+        // unload
+        FASTASK.list_handler.unset_loading();
 
         FASTASK.list_handler.update_active_tabs();
     };
@@ -191,14 +142,9 @@ function List() {
      * Updates the active tabs according to current state
      */
     this.update_active_tabs = function () {
-        $('.tabs .icon', FASTASK.constants.lists[0])
+        $('.tabs .icon', FASTASK.constants.list)
             .removeClass('active')
-            .eq(FASTASK.list_handler.type).addClass('active')
-        ;
-        $('.tabs .icon', FASTASK.constants.lists[1])
-            .removeClass('active')
-            .eq(FASTASK.list_handler.expect_what - 1).addClass('active')
-        ;
+            .eq(FASTASK.list_handler.type).addClass('active');
     };
 
     /**
@@ -209,112 +155,39 @@ function List() {
         // build task list from json
         this.update_groups();
 
-        // remove previous tasks
-        for (i in this.expecting) {
-            if (this.expecting[i]) {
-                if (0 === parseInt(i, 10)) {
-                    // for main, also remove message
-                    $('.notasks', FASTASK.constants.lists[i]).remove();
-                }
-                $('.table', FASTASK.constants.lists[i])
-                    .children().remove().end()
-                    .html('');
-            }
-        }
+        $('.notasks', FASTASK.constants.list).remove();
+        $('.table', FASTASK.constants.list)
+            .children().remove().end()
+            .html('');
 
         for (i in this.response.tasks) {
-            // build planner and trash if not searching
-            if ('' === this.last_search_q &&
-                (this.response.tasks[i].planned ||
-                this.response.tasks[i].trash)
-            ) {
-                html_task = this.build_task_json_min(i);
-                if (this.response.tasks[i].trash) {
-                    html_task.appendTo(FASTASK.constants.lists[1].children('.table'));
-                    html_task.find('.del').addClass('undo');
-                } else {
-                    html_task.children().eq(1).addClass('plan')
-                        .bind('click', this.handle_plan_action);
-                    html_task.appendTo(FASTASK.constants.lists[1].children('.table'));
-                }
-            } else {
             // build main list
-                html_task = this.build_task_json(i);
-                html_task.appendTo(FASTASK.constants.lists[0].children('.table'));
-                if (1 === this.type && this.response.tasks[i].group) {
-                    html_text = html_task.children('.text');
-                    html_text.find('.editable').width(
-                        html_text.width() - html_text.find('.g').width() -
-                        this.ASSIGNMENT_EDITABLE_WIDTH_ADJUSTMENT
-                    );
-                    html_text.children('.editable').css(
-                        'text-indent', (html_text.children('.g').width() +
-                            FASTASK.constants.pixels.assignmentindent) + 'px');
-                }
+            html_task = this.build_task_json(i);
+            html_task.appendTo(FASTASK.constants.list.children('.table'));
+            if (1 === this.type && this.response.tasks[i].group) {
+                html_text = html_task.children('.text');
+                html_text.find('.editable').width(
+                    html_text.width() - html_text.find('.g').width() -
+                    this.ASSIGNMENT_EDITABLE_WIDTH_ADJUSTMENT);
+                html_text.children('.editable').css(
+                    'text-indent', (html_text.children('.g').width() +
+                        FASTASK.constants.pixels.assignmentindent) + 'px');
             }
         }
 
         // update the pager and the counts
-        for (i in this.expecting) {
-            if (this.expecting[i]) {
-                pager = $('.pager', FASTASK.constants.lists[i]);
-                if (pager.length > 0) {
-                    pager.remove();
-                }
-                pager = $(this.response.pager[i]).appendTo(FASTASK.constants.lists[i]);
-                if (i === '0') {
-                    pager.children('a').bind('click', handle_pager_main);
-                } else {
-                    pager.children('a').bind('click', handle_pager_mini);
-                }
+        pager = $('.pager', FASTASK.constants.list);
+        if (pager.length > 0) {
+            pager.remove();
+        }
+        pager = $(this.response.pager).appendTo(FASTASK.constants.list);
+        pager.children('a').bind('click', handle_pager_main);
 
-                // update small numbers for the tabs
-                for (k in this.response.counts[i]) {
-                    $('.tabs .c', FASTASK.constants.lists[i]).eq(k)
-                        .html(this.response.counts[i][k]);
-                }
-            }
+        // update small numbers for the tabs
+        for (k in this.response.counts) {
+            $('.tabs .c', FASTASK.constants.list).eq(k)
+                .html(this.response.counts[k]);
         }
-    };
-
-    /**
-     * Builds a row for the mini list
-     * @param int i the row number in this.response.tasks
-     */
-    this.build_task_json_min = function (i) {
-        // use these throughout for convenience
-        var task_group, html_text,
-            json_task = this.response.tasks[i],
-            html_task = FASTASK.constants.templates.minirow.clone()
-        ;
-        if (json_task.is_done) {
-            html_task.addClass('done');
-        }
-        html_text = html_task.children('.text');
-        if (json_task.group) {
-            task_group = FASTASK.constants.templates.rowgroup.clone().attr('href', '#g=' +
-                json_task.group.id)
-                .html(json_task.group.name);
-            // for ASSIGNMENTS, not allowed to change group
-            task_group
-                .prependTo(html_text);
-            json_task.text = ': ' + json_task.text;
-        }
-        html_text
-            .append(json_task.text);
-        html_task.children('.del')
-            .children('input[name="task_id"]').val(json_task.id)
-            .end()
-            .children('input[name="user_id"]').val(json_task.user_id)
-        ;
-        if (json_task.trash) {
-            html_task.children('.del')
-                .bind('click', handle_undelete);
-        } else {
-            html_task.children('.del')
-                .bind('click', handle_delete);
-        }
-        return html_task;
     };
 
     /**
@@ -388,36 +261,31 @@ function List() {
             this.search_val.length <= 0) {
             return;
         }
-        // search results go in main list only
-        FASTASK.list_handler.expect(0);
-        FASTASK.list_handler.unexpect(1);
-
         $.ajax({
             type: 'GET',
             url: FASTASK.constants.paths.list +
-                '?p=' + this.search_page + '&s=' + this.search_val +
-                '&ep=' + this.expecting[0] + '&n=' + this.main_per_page,
+                '?p=' + this.search_page + '&s=' + this.search_val,
             dataType: 'json',
             beforeSend: function () {
                 // show searching is in progress
-                $('.search-s', FASTASK.constants.lists[0]).show();
-                FASTASK.list_handler.set_loading(0);
+                $('.search-s', FASTASK.constants.list).show();
+                FASTASK.list_handler.set_loading();
             },
             error: function (response, textStatus, error) {
                 // remember search
                 FASTASK.list_handler.last_search_q = FASTASK
 			.list_handler.search_val;
 
-                FASTASK.list_handler.unset_loading(0);
-                $('.search-s', FASTASK.constants.lists[0]).hide();
+                FASTASK.list_handler.unset_loading();
+                $('.search-s', FASTASK.constants.list).hide();
 
                 // if nothing found
                 if (response.status === 404) {
-                    $('.table', FASTASK.constants.lists[0])
+                    $('.table', FASTASK.constants.list)
                         .children().remove().end()
                         .html('');
                     FASTASK.constants.templates.notasks.insertBefore($('.table',
-                        FASTASK.constants.lists[0]));
+                        FASTASK.constants.list));
                     return false;
                 }
 
@@ -430,11 +298,11 @@ function List() {
                 FASTASK.list_handler.last_search_q = FASTASK
 			.list_handler.search_val;
 
-                $('.search-s', FASTASK.constants.lists[0]).hide();
-                FASTASK.list_handler.unset_loading(0);
+                $('.search-s', FASTASK.constants.list).hide();
+                FASTASK.list_handler.unset_loading();
 
                 // wipe previous list
-                $('.table', FASTASK.constants.lists[0])
+                $('.table', FASTASK.constants.list)
                     .children().remove().end()
                     .html('');
 
@@ -446,10 +314,9 @@ function List() {
                 // change the title to distinguish search results
                 var url_g = '#t=' + FASTASK.list_handler.group,
                     title_g = FASTASK.constants.titles_plain[4];
-                $('.title', FASTASK.constants.lists[0])
+                $('.title', FASTASK.constants.list)
                     .html('<a href="' + url_g + '">' +
-                        title_g +
-                        '</a>');
+                          title_g + '</a>');
             }
         });
     };
@@ -459,12 +326,8 @@ function List() {
      */
     this.per_page = function () {
         // calculate main tasks per page
-        this.main_per_page = parseInt(((FASTASK.constants.lists[0].height() -
+        this.main_per_page = parseInt(((FASTASK.constants.list.height() -
             FASTASK.constants.pixels.mainminus) / FASTASK.constants.pixels.rowheight), 10);
-
-        // calculate mini tasks per page
-        this.mini_per_page = parseInt(((FASTASK.constants.lists[1].height() -
-            FASTASK.constants.pixels.miniminus) / FASTASK.constants.pixels.rowheight), 10);
     };
 
     /**
@@ -479,26 +342,12 @@ function List() {
             $(this).height($(this).parent().height() + 'px');
         });
 
-        // don't automatically refresh unless the numbers changed changed
-        FASTASK.list_handler.unexpect(0);
-        FASTASK.list_handler.unexpect(1);
-
         // check if main number changed
-        if ($('.table', FASTASK.constants.lists[0])
+        if ($('.table', FASTASK.constants.list)
                 .height() !== FASTASK.list_handler.main_per_page * FASTASK.constants.pixels.rowheight) {
-            $('.table', FASTASK.constants.lists[0])
+            $('.table', FASTASK.constants.list)
                 .height(FASTASK.list_handler.main_per_page * FASTASK.constants.pixels.rowheight);
             reload = true;
-            FASTASK.list_handler.expect(0);
-        }
-
-        // check if mini number changed
-        if ($('.table', FASTASK.constants.lists[1])
-                .height() !== FASTASK.list_handler.mini_per_page * FASTASK.constants.pixels.rowheight) {
-            $('.table', FASTASK.constants.lists[1])
-                .height(FASTASK.list_handler.mini_per_page * FASTASK.constants.pixels.rowheight);
-            reload = true;
-            FASTASK.list_handler.expect(1);
         }
 
         if (!FASTASK.url_handler.hash_last) {
@@ -549,7 +398,7 @@ function List() {
                 .html(title_g);
             this.groups_list.append(html_g);
         }
-        this.groups_list.appendTo($('.groups', FASTASK.constants.lists[0]));
+        this.groups_list.appendTo($('.groups', FASTASK.constants.list));
         $('.groups a').bind('click', handle_change_group);
     };
 
@@ -580,7 +429,7 @@ function List() {
         if (FASTASK.list_handler.last_search_q === search_val) {
             return true;
         }
-        FASTASK.list_handler.clear_timeout(0);
+        FASTASK.list_handler.clear_timeout();
 
         FASTASK.list_handler.search_timeout = setTimeout(function () {
             FASTASK.list_handler.search_val = search_val;
@@ -606,17 +455,6 @@ function List() {
     };
 
     /**
-     * Callback mini pager updates the url hash
-     * Parameter: u
-     */
-    handle_pager_mini = function () {
-        var page = parseInt(FASTASK.url_handler
-            .get_url_param(FASTASK.constants.params.minipage, $(this).attr('href')), 10);
-        FASTASK.url_handler.url_update_hash(FASTASK.constants.params.minipage, page);
-        return false;
-    };
-
-    /**
      * Changing task.priority
      */
     handle_priority = function (e) {
@@ -632,7 +470,7 @@ function List() {
     };
 
     /**
-     * Delete task, main or mini
+     * Delete task
      */
     handle_delete = function (e) {
         FASTASK.row_handler.update_row('delete', $(this));
@@ -640,7 +478,7 @@ function List() {
     };
 
     /**
-     * Undelete task, main or mini
+     * Undelete task
      */
     handle_undelete = function (e) {
         FASTASK.row_handler.update_row('undelete', $(this));
@@ -675,7 +513,7 @@ function List() {
     /**
      * Changing main tabs
      */
-    $('.tabs .icon', FASTASK.constants.lists[0]).click(function () {
+    $('.tabs .icon', FASTASK.constants.list).click(function () {
         var type = parseInt(FASTASK.url_handler.
             get_url_param(FASTASK.constants.params.type, $(this).children('a').attr('href')),
             10);
@@ -684,22 +522,9 @@ function List() {
     });
 
     /**
-     * Changing mini tabs
-     */
-    $('.tabs .icon', FASTASK.constants.lists[1]).click(function () {
-        var type = parseInt(FASTASK.url_handler.
-            get_url_param(FASTASK.constants.params.minitype,
-                $(this).children('a').attr('href')), 10);
-        FASTASK.list_handler.expect(1);
-        FASTASK.list_handler.expect_what = type;
-        FASTASK.list_handler.get_lists();
-        return false;
-    });
-
-    /**
      * Changing groups
      */
-    $('.title a', FASTASK.constants.lists[0]).live('click', function () {
+    $('.title a', FASTASK.constants.list).live('click', function () {
         FASTASK.url_handler.url_update_hash(FASTASK.constants.params.mainpage, 1, true);
         return false;
     });
@@ -750,9 +575,9 @@ function List() {
     };
 
     // init stuff
-    $('input[name="search"]', FASTASK.constants.lists[0]).bind('keyup', handle_search_action);
-    FASTASK.constants.lists[0].appendTo('#content');
-    FASTASK.constants.lists[1].appendTo('#content');
+    $('input[name="search"]', FASTASK.constants.list).bind('keyup', handle_search_action);
+    FASTASK.constants.list.appendTo('#content');
+    FASTASK.constants.list.appendTo('#content');
     this.refresh_timeout = setInterval(this.refresh_all,
         FASTASK.constants.timeouts.refresh);
     this.per_page();

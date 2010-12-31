@@ -87,7 +87,7 @@ FC.pixels = {
 };
 
 // separator for variables in the url hash
-FC.hash_separator= ';';
+FC.hash_separator= '&';
 
 // plain titles for the lists, used in e.g. notifications
 FC.titles_plain = [
@@ -96,8 +96,6 @@ FC.titles_plain = [
     'command',
     'archive',
     'search',
-    'planner',
-    'trash'
 ];
 // the html version, used in e.g. groups
 FC.titles_html = [
@@ -106,8 +104,6 @@ FC.titles_html = [
     '<a href="#t=2">' + FC.titles_plain[2] + '</a>',
     '<a href="#t=3">' + FC.titles_plain[3] + '</a>',
     '<a href="#s=1">' + FC.titles_plain[4] + '</a>',
-    '<a href="#l=1">' + FC.titles_plain[5] + '</a>',
-    '<a href="#l=2">' + FC.titles_plain[6] + '</a>'
 ];
 
 // used with ajax, for performing calls
@@ -122,10 +118,8 @@ FC.paths = {
 // url parameters (in hash)
 FC.params = {
     'mainpage': 'p',
-    'minipage': 'u',
     'group': 'g',
     'type': 't',
-    'minitype': 'l'
 };
 
 /*-------------- JQUERY -----------------*/
@@ -145,9 +139,6 @@ FC.templates = {
 
 // main row template
     'mainrow': $('#data-mainrow').children().first(),
-
-// mini row template (for planner, trash)
-    'minirow': $('#data-minirow').children().first(),
 
 // used to greate a single group in a row
     'rowgroup': $('#data-rowgroup').children().first(),
@@ -190,13 +181,7 @@ FC.templates.indicator = $('div.top span.adding', FC.templates.notifbox);
 $('form input[name="due"]', FC.templates.workbox).val(FC.strings.due);
 
 
-FC.lists = [
-// main list template
-    $('#data-task-box').children().first(),
-
-// minibox template
-    $('#data-mini').children().first()
-];
+FC.list = $('#data-task-box').children().first();
 
 FC.workbox = {
 // default due date

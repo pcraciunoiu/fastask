@@ -121,24 +121,19 @@ function Data() {
                 FASTASK.list_handler.error = error;
                 FASTASK.list_handler.response = null;
                 // clear the loading
-                for (var i in FASTASK.list_handler.expecting) {
-                    if (FASTASK.list_handler.expecting[i]) {
-                        FASTASK.list_handler.unset_loading(i);
-                    }
-                }
+                FASTASK.list_handler.unset_loading();
+
                 // handle not found
                 if (request.status === 404) {
                     // still set the title and active tab
-                    if (FASTASK.list_handler.expecting[0]) {
-                        $('.title', FASTASK.constants.lists[0])
-                            .html(FASTASK.constants.titles_html[FASTASK.list_handler.type]);
+                    $('.title', FASTASK.constants.list)
+                        .html(FASTASK.constants.titles_html[FASTASK.list_handler.type]);
 
-                        FASTASK.constants.templates.notasks.insertBefore(
-                            $('.table', FASTASK.constants.lists[0]));
-                        $('.table', FASTASK.constants.lists[0])
-                            .children().remove().end()
-                            .html('');
-                    }
+                    FASTASK.constants.templates.notasks.insertBefore(
+                        $('.table', FASTASK.constants.list));
+                    $('.table', FASTASK.constants.list)
+                        .children().remove().end()
+                        .html('');
 
                     FASTASK.list_handler.update_active_tabs();
                 }

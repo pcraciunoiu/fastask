@@ -21,7 +21,6 @@
             fastask has one page from which you can perform most of your actions. It's like GMail! This page is split into five areas of interest. Here they are:
             <ul>
               <li><a href="#h-main">The main box</a>, the largest of them all, contains four tabs, a search feature.</li>
-              <li><a href="#h-mini">The mini box</a>, contains the planner and trash.</li>
               <li><a href="#h-noti">The notification area</a>, shows you feedback about important actions.</li>
               <li><a href="#h-work">The work box</a>, from which you can create and plan tasks.</li>
               <li><a href="#h-prof">Your profile</a>, from which you can change your name, email, or password.</li>
@@ -61,26 +60,6 @@
           <p>To delete a task, click the red <em>delete icon</em> to the right. To undo your deletion, click on the <em>green</em> icon</p>
           <p>To share a task, hover over the rightmost <em>sharing icon</em> and select who you want to share with.</p>
           <p>To navigate through a longer list, use the pagination at the bottom.</p>
-
-
-          <h2 id="h-mini">Mini box</h2>
-          <a href="#h-top">back to top</a><p>
-
-          <h3>Mini top bar</h3>
-          <p>
-            This mini top bar has 2 tabs: planner and trash.
-            <ul>
-              <li><em>Planner</em> &mdash; tasks you are following without a due date set.</li>
-              <li><em>Trash</em> &mdash; deleted tasks. These are periodically deleted by fastask (usually after 30 days).</li>
-            </ul>
-          </p>
-
-          <h3>Mini list</h3>
-          <a href="#h-top">back to top</a><p>
-
-          <p>This list offers fewer functionality than the main one.</p>
-          <p>If you are viewing the planner, you can plan tasks or delete them. To plan a task for today, just click on it. To plan it for a different date, use <em>Shift + Click</em> instead.</p>
-          <p>You can also delete or undelete tasks by clicking on the red or green delete icon, respectively.</p>
 
 
           <h2 id="h-noti">Notification area</h2>
@@ -158,18 +137,6 @@
           <input type="hidden" value="" name="user_id">
         </div>
         <div class="td followers"><a href="#" title="sharing"></a></div>
-      </div>
-    </div>
-
-    <div id="data-minirow">
-      <div class="row">
-        <div class="td text"></div>
-        <div class="td"><a href="#"> </a></div>
-        <div class="td del">
-          <a href="#"> </a>
-          <input type="hidden" value="" name="task_id">
-          <input type="hidden" value="" name="user_id">
-        </div>
       </div>
     </div>
 
@@ -330,22 +297,6 @@
           <div class="icon" title="search"><a href="#s=1"></a></div>
         </div>
         <div class="task-table table" cellspacing="0"></div>
-      </div>
-    </div>
-
-    <div id="data-mini">
-      <div id="mini" class="mini-box box" rel="1">
-        <div class="loading"></div>
-        <h1 class="title">planner</h1>
-        <div class="tabs">
-          <div class="icon planner" title="stuff witout a due date">
-            <a href="#l=1"></a><span class="c"></span>
-          </div>
-          <div class="icon trash" title="bleh, garbage">
-            <a href="#l=2"></a><span class="c"></span>
-          </div>
-        </div>
-        <div class="table" cellspacing="0"></div>
       </div>
     </div>
   </article>{# constants #}
