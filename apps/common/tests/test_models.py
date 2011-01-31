@@ -1,5 +1,3 @@
-import datetime
-
 from django.contrib.auth.models import User
 
 from nose import SkipTest
@@ -32,9 +30,6 @@ def task(**kwargs):
 
 class TaskTestCase(TestCase):
     fixtures = ['users.json']
-
-    def setUp(self):
-        super(TaskTestCase, self).setUp()
 
     def test_is_created(self):
         t = task()

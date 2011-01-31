@@ -1,5 +1,6 @@
 # Production requirements, not compiled. For compiled see compiled.txt
 pytz
+parsedatetime
 
 # -e git://github.com/django/django.git#egg=django -- installed from git
 -e git://github.com/jbalogh/jingo.git#egg=jingo

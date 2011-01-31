@@ -18,4 +18,5 @@ urlpatterns = patterns('dashboards.views',
     url(r'^all$', views.all, name='all.json'),
 
     url(r'^task/(?P<task_id>\d+)', include(task_patterns)),
+    url(r'^task/new$', views.new_task, name='task.new'),
 )

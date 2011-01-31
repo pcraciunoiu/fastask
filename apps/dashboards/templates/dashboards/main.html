@@ -235,7 +235,7 @@
     <div id="data-work-box">
       <div class="work-box">
         <h1 id="wb" class="title">work box</h1>
-        <form action="/task/add" method="POST">
+        <form action="{{ url('task.new') }}" method="POST">
           <label class="text">Task: <br />
             <textarea rows="5" cols="10" name="text"></textarea>
           </label>

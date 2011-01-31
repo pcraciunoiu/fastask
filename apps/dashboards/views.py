@@ -30,6 +30,12 @@ def all(request):
                     'tasks': tasks, 'friends': friends})
 
 
+@require_POST
+def new_task(request):
+    # TODO: use forms
+    return json_r({'TODO': True})
+
+
 def _validate_field_value(field_name, value):
     """Validates the field's value given its name."""
     if field_name == 'priority':
