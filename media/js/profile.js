@@ -128,16 +128,8 @@ function Profile() {
         FASTASK.constants.templates.profile.find('input[name="email"]')
             .val(current_user.email);
 
-        // update current user and workbox
+        // update current user
         this.CURRENT_USER = current_user;
-        FASTASK.workbox_handler.set_share_list();
-
-        this.continue_init();
-    };
-
-    this.continue_init = function () {
-        FASTASK.list_handler.get_lists();
-        FASTASK.url_handler.allow_get_lists = true;
     };
 
     // init stuff

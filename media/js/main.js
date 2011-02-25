@@ -22,8 +22,13 @@ $(document).ready(function () {
         FASTASK.url_handler.type
     );
 
-    // this one fires off the calls
+    // this one needs to be last
     FASTASK.profile_handler = new Profile();
+
+    // set the data
+    FASTASK.workbox_handler.set_share_list();
+    FASTASK.list_handler.get_lists();
+    FASTASK.url_handler.allow_get_lists = true;
 
     // sync that task data yo dawg
     FASTASK.data.sync_data();
