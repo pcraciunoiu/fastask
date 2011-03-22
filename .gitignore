@@ -8,3 +8,4 @@ pip-log.txt
 **-min.js
 tmp
 settings_*.py
+logs/
